@@ -2,29 +2,26 @@ package org.ems.employee.model;
 
 
 import java.time.LocalDate;
-
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 @Entity
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employeeId;
-    private String employeeName;
+    private String employeename;
     private String address;
     private String phoneNo;
     private String email;
     private LocalDate dob;
     private Double salary;
+
 	@Override
 	public String toString() {
-		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", address=" + address
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeename + ", address=" + address
 				+ ", phoneNo=" + phoneNo + ", email=" + email + ", dob=" + dob + ", salary=" + salary + "]";
 	}
 	
@@ -40,12 +37,8 @@ public class Employee {
 		this.employeeId = employeeId;
 	}
 
-	public String getEmployeeName() {
-		return employeeName;
-	}
-
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
+	public String getEmployeename() {
+		return employeename;
 	}
 
 	public String getAddress() {
@@ -88,9 +81,9 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public Employee(String employeeName, String address, String phoneNo, String email, LocalDate dob, Double salary) {
+	public Employee(String employeename, String address, String phoneNo, String email, LocalDate dob, Double salary) {
 		super();
-		this.employeeName = employeeName;
+		this.employeename = employeename;
 		this.address = address;
 		this.phoneNo = phoneNo;
 		this.email = email;

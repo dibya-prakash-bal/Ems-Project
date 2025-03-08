@@ -36,6 +36,7 @@ public class AdminController {
 	public String employeeList(Model model) {
 		List<Employee> employees = employeeService.getAllEmployee();
 		model.addAttribute("emplist", employees);
+		System.out.println(employees.toString());
 		return "employee-table";
 	}
 
