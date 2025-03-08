@@ -39,10 +39,10 @@
 
         <!-- Edit Employee Form -->
         <div class="form-container">
-            <form:form action="update" modelAttribute="department" method="POST"
-                       id="employeeForm">
+            <form:form action="updateDept" modelAttribute="department" method="POST"
+                       id="departmentForm">
                 <!-- Hidden field for ID -->
-                <form:hidden path="employeeId" />
+                <form:hidden path="departmentId" />
 
                 <div class="mb-3">
                     <label for="departmentName" class="form-label">Department Name
