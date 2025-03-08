@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
 <html data-bs-theme="light" lang="en">
 <head>
@@ -197,19 +198,18 @@
 					<div class="row mb-4">
 						<div class="col-md-6">
 							<h3 class="text-dark mb-4">Add Role</h3>
-							<form action="addRole" method="post">
+							<form id="addRoleForm" action="addRole" method="post" modelAttribute="role">
 								<div class="mb-3">
-									<label for="roleName" class="form-label">Role
-										Name</label> <input type="text" class="form-control"
-										id="roleName" name="roleName" required>
+									<label for="roleName" class="form-label">Role Name</label> <input
+										type="text" class="form-control" id="roleName" name="roleName"
+										required>
 								</div>
 								<div class="mb-3">
 									<label for="description" class="form-label">Description</label>
 									<textarea class="form-control" id="description"
-										name="description" required></textarea>
+										name="roleDescription" required></textarea>
 								</div>
-								<button type="submit" class="btn btn-primary">Add
-									Role</button>
+								<button type="submit" class="btn btn-primary">Add Role</button>
 							</form>
 						</div>
 						<div class="col-md-6">
@@ -224,13 +224,13 @@
 					<div class="row">
 						<div class="col-md-6">
 							<h3 class="text-dark mb-4">Assign Role to Employee</h3>
-							<form action="assignRoleServlet" method="post">
+							<form id="addRoleEmp"  method="post">
 								<div class="mb-3">
 									<label for="employee" class="form-label">Employee:</label> <select
 										id="employee" name="employeeId" class="form-select" required>
 										<option value="">Select an Employee</option>
-										<c:forEach items="${employees}" var="employee">
-											<option value="${employee.id}">${employee.name}</option>
+										<c:forEach items="${emps}" var="employee">
+											<option value="${employee.employeeId}">${employee.employeeName}</option>
 										</c:forEach>
 									</select>
 								</div>
@@ -239,7 +239,7 @@
 										id="role" name="roleId" class="form-select" required>
 										<option value="">Select a Role</option>
 										<c:forEach items="${roles}" var="role">
-											<option value="${role.id}">${role.roleName}</option>
+											<option value="${role.roleId}">${role.roleName}</option>
 										</c:forEach>
 									</select>
 								</div>
@@ -249,13 +249,13 @@
 						</div>
 						<div class="col-md-6">
 							<h3 class="text-dark mb-4">Assign Employee to Department</h3>
-							<form action="assignEmployeeToDepartmentServlet" method="post">
+							<form id="addDeptEmp" action="assignEmployeeToDepartmentServlet" method="post">
 								<div class="mb-3">
 									<label for="employee" class="form-label">Employee:</label> <select
 										id="employee" name="employeeId" class="form-select" required>
 										<option value="">Select an Employee</option>
-										<c:forEach items="${employees}" var="employee">
-											<option value="${employee.id}">${employee.name}</option>
+										<c:forEach items="${emps}" var="employee">
+											<option value="${employee.employeeId}">${employee.employeeName}</option>
 										</c:forEach>
 									</select>
 								</div>
@@ -289,5 +289,26 @@
 		<script src="assets/js/jquery.min.js"></script>
 		<script src="assets/bootstrap/js/bootstrap.min.js"></script>
 		<script src="assets/js/script.min.js"></script>
+		<script>
+		 $(document).ready(function() {
+	            // Handle the Assign Role form submission
+	            $('#addRoleEmp').submit(function(e) {
+	                e.preventDefault();
+	                var formData = $(this).serialize();
+	                $.ajax({
+	                    type: 'POST',
+	                    url: 'assignRole',
+	                    data: formData,
+	                    success: function(response) {
+	                        alert('Role assigned successfully!');
+	                        // You can refresh the page or update the UI here
+	                    },
+	                    error: function(xhr, status, error) {
+	                        alert('Error assigning role: ' + error);
+	                    }
+	                });
+	            });
+
+		</script>
 </body>
 </html>
