@@ -12,7 +12,7 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employeeId;
-    private String employeename;
+    private String employeeName;
     private String address;
     private String phoneNo;
     private String email;
@@ -21,7 +21,7 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeename + ", address=" + address
+		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", address=" + address
 				+ ", phoneNo=" + phoneNo + ", email=" + email + ", dob=" + dob + ", salary=" + salary + "]";
 	}
 	
@@ -37,8 +37,12 @@ public class Employee {
 		this.employeeId = employeeId;
 	}
 
-	public String getEmployeename() {
-		return employeename;
+	public String getEmployeeName() {
+		return employeeName;
+	}
+
+	public void setEmployeeName(String name) {
+		this.employeeName = name;
 	}
 
 	public String getAddress() {
@@ -81,9 +85,9 @@ public class Employee {
 		this.salary = salary;
 	}
 
-	public Employee(String employeename, String address, String phoneNo, String email, LocalDate dob, Double salary) {
+	public Employee(String employeeName, String address, String phoneNo, String email, LocalDate dob, Double salary) {
 		super();
-		this.employeename = employeename;
+		this.employeeName = employeeName;
 		this.address = address;
 		this.phoneNo = phoneNo;
 		this.email = email;

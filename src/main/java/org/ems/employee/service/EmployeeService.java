@@ -7,5 +7,6 @@ import org.ems.employee.model.Employee;
 public interface EmployeeService {
 	void addEmployee(Employee employee);
 	List<Employee> getAllEmployee();
+	Employee getEmployeeById(Long id);
 
 }
