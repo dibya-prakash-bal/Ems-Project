@@ -301,7 +301,7 @@
 														<div class="mb-3">
 															<label class="form-label" for="username"><strong>Username</strong></label>
 															<input class="form-control" type="text" id="username"
-																   value="${emp.employeename}" placeholder="user.name" name="username">
+																   value="${emp.employeeName}" placeholder="user.name" name="username">
 														</div>
 													</div>
 													<div class="col">
@@ -343,9 +343,9 @@
 										<div class="card-body">
 											<form>
 												<div class="mb-3">
-													<label class="form-label" for="address"><strong>Address</strong></label><input
-														class="form-control" type="text" id="address"
-														placeholder="Sunset Blvd, 38" name="address">
+													<label class="form-label" for="address"><strong>Address</strong></label>
+													<input class="form-control" type="text" id="address"
+														 value="${emp.address}" placeholder="Sunset Blvd, 38" name="address">
 												</div>
 												<div class="row">
 													<div class="col">
