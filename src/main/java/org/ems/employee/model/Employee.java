@@ -5,13 +5,12 @@ import java.time.LocalDate;
 
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 @Entity
 public class Employee {
 	@Id
@@ -24,6 +23,7 @@ public class Employee {
     private String email;
     private LocalDate dob;
     private Double salary;
+
 	@Override
 	public String toString() {
 		return "Employee [employeeId=" + employeeId + ", employeeName=" + employeeName + ", address=" + address
@@ -46,8 +46,8 @@ public class Employee {
 		return employeeName;
 	}
 
-	public void setEmployeeName(String employeeName) {
-		this.employeeName = employeeName;
+	public void setEmployeeName(String name) {
+		this.employeeName = name;
 	}
 
 	public String getAddress() {

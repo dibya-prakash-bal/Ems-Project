@@ -35,6 +35,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 
 
+
 	@Override
 	public void deleteEmployee(Long id) {
 		// TODO Auto-generated method stub
@@ -59,4 +60,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 	
 	
 	
+
+//	@Override
+//	public Employee getEmployeeById(Long id) {
+//		return employeeRepository.getById(id);
+//	}
+
+
 }

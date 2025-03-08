@@ -7,7 +7,6 @@ import org.ems.employee.model.Employee;
 import org.ems.employee.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -36,6 +34,7 @@ public class AdminController {
 	public String employeeList(Model model) {
 		List<Employee> employees = employeeService.getAllEmployee();
 		model.addAttribute("emplist", employees);
+		System.out.println(employees.toString());
 		return "employee-table";
 	}
 
@@ -50,7 +49,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/addEmployee", method = { RequestMethod.POST })
-	public String submitEmpForm(@RequestParam("employeeName") String empName, @RequestParam("email") String email,@RequestParam("address") String address,
+	public String submitEmpForm(@RequestParam("name") String name, @RequestParam("email") String email,@RequestParam("address") String address,
 			@RequestParam("phoneNo") String phoneNo, @RequestParam("dob") LocalDate dob,
 			@RequestParam("salary") Double salary) {
 //		if(result.hasErrors()) {
@@ -58,9 +57,10 @@ public class AdminController {
 //    	@ModelAttribute("empForm") Employee emp,
 //    	, BindingResult result
 //		}
-		System.out.println(empName + " " + email + " " + phoneNo + " " + dob + " " + salary);
+		System.out.println(name + " " + email + " " + phoneNo + " " + dob + " " + salary);
 //	   System.out.println(emp.toString());
 		Employee newEmp = new Employee();
+		newEmp.setEmployeeName(name);
 		newEmp.setEmail(email);
 		newEmp.setAddress(address);
 		newEmp.setDob(dob);
