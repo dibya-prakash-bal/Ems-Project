@@ -232,11 +232,12 @@
 												<td>${emp.phoneNo }</td>
 												<td>${emp.dob}</td>
 												<td>${emp.salary}</td>
-												<td>
-													<button type="button" class="btn btn-warning"
-														onclick="editEmployee(${emp.employeeId})">Edit</button>
-													<button type="button" class="btn btn-danger"
-														onclick="deleteEmployee(${emp.employeeId})">Delete</button>
+												<td><a
+													href="editemp?empid=${emp.employeeId}"
+													class="btn btn-outline-warning">Edit</a>
+
+													<a  
+														href="deleteEmployee?empid=${emp.employeeId}"><button class="btn btn-danger" type="button">Delete</button></a>
 												</td>
 											</tr>
 										</c:forEach>

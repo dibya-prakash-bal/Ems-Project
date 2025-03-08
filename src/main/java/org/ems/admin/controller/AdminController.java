@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,7 +49,7 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/addEmployee", method = { RequestMethod.POST })
-	public String submitEmpForm(@RequestParam("name") String name, @RequestParam("email") String email,@RequestParam("address") String address,
+	public String submitEmpForm(@RequestParam("employeeName") String name, @RequestParam("email") String email,@RequestParam("address") String address,
 			@RequestParam("phoneNo") String phoneNo, @RequestParam("dob") LocalDate dob,
 			@RequestParam("salary") Double salary) {
 //		if(result.hasErrors()) {
@@ -72,9 +73,40 @@ public class AdminController {
 		
 		
 	}
-	@RequestMapping(value="/update",method= {RequestMethod.POST})
-	public String updateEmployee(Model model,@ModelAttribute("updateEmp") Employee employee) {
-		return null;
+//	@RequestMapping(value="/update",method= {RequestMethod.POST})
+//	@GetMapping("/editemp")
+//	public String updateEmployeePre(Model model,@RequestParam("empid") Long id) {
+////		System.out.println(emp.toString());
+//		Employee employee = employeeService.getEmployeeById(id);
+//        model.addAttribute("emp", employee);
+//		System.out.println(id);
+//		return "EditEmployeeForm";
+//	}
+	
+//	@RequestMapping(value="/update",method = {RequestMethod.POST})
+//	public String updateEmployeeDetail(Model model,@ModelAttribute("updateEmp") Employee employee) {
+//		System.out.println(employee.toString());
+//		return "redirect:/EditEmployeeForm";
+//	}
+//	
+	@GetMapping(value="/deleteEmployee")
+	public String deleteEmployee(Model model,@RequestParam("empid") Long id) {
+		System.out.println(id);
+		employeeService.deleteEmployee(id);
+		return "redirect:/emplist";
+	}
+	@GetMapping("/editemp")
+	public String updateEmployee(Model model, @RequestParam("empid") Long id) {
+	    Employee employee = employeeService.getEmployeeById(id);
+	    model.addAttribute("employee", employee); // Changed attribute name to "employee"
+	    return "EditEmployeeForm";
+	}
+
+	@PostMapping("/update")
+	public String updateEmployeeDetail(@ModelAttribute("employee") Employee employee) {
+		System.out.println(employee.toString());
+		employeeService.UpdateEmployee(employee);
+	    return "redirect:/emplist"; // Redirect to employee list page
 	}
 	
 

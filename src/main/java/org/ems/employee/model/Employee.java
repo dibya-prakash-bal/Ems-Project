@@ -2,6 +2,10 @@ package org.ems.employee.model;
 
 
 import java.time.LocalDate;
+
+import jakarta.annotation.Generated;
+import jakarta.persistence.Column;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -12,6 +16,7 @@ public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long employeeId;
+	@Column(name = "empname")
     private String employeeName;
     private String address;
     private String phoneNo;
