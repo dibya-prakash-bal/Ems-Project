@@ -226,7 +226,7 @@
 									<tbody>
 										<c:forEach var="emp" items="${emplist}">
 											<tr>
-												<td>${emp.employeeName}</td>
+												<td>${emp.employeename}</td>
 												<td>${emp.email}</td>
 												<td>${emp.address}</td>
 												<td>${emp.phoneNo }</td>
