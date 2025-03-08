@@ -10,6 +10,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Employee {
@@ -23,6 +25,33 @@ public class Employee {
     private String email;
     private LocalDate dob;
     private Double salary;
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+    
+    
+    
+
+	public Employee(Long employeeId, String employeeName, String address, String phoneNo, String email, LocalDate dob,
+			Double salary, Role role) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+		this.address = address;
+		this.phoneNo = phoneNo;
+		this.email = email;
+		this.dob = dob;
+		this.salary = salary;
+		this.role = role;
+	}
+
+	public Role getRole() {
+		return role;
+	}
+
+	public void setRole(Role role) {
+		this.role = role;
+	}
 
 	@Override
 	public String toString() {
