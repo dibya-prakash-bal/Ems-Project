@@ -42,7 +42,7 @@ public class DeparmentController {
 
         departmentService.addDepartment(newDept);
 
-        return "redirect:/employee-table";
+        return "redirect:/deptlist";
 
 
     }
