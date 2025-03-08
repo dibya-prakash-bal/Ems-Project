@@ -73,9 +73,39 @@ public class AdminController {
 		
 		
 	}
-	@RequestMapping(value="/update",method= {RequestMethod.POST})
-	public String updateEmployee(Model model,@ModelAttribute("updateEmp") Employee employee) {
-		return null;
+//	@RequestMapping(value="/update",method= {RequestMethod.POST})
+//	@GetMapping("/editemp")
+//	public String updateEmployeePre(Model model,@RequestParam("empid") Long id) {
+////		System.out.println(emp.toString());
+//		Employee employee = employeeService.getEmployeeById(id);
+//        model.addAttribute("emp", employee);
+//		System.out.println(id);
+//		return "EditEmployeeForm";
+//	}
+	
+//	@RequestMapping(value="/update",method = {RequestMethod.POST})
+//	public String updateEmployeeDetail(Model model,@ModelAttribute("updateEmp") Employee employee) {
+//		System.out.println(employee.toString());
+//		return "redirect:/EditEmployeeForm";
+//	}
+//	
+//	@GetMapping(value="/deleteEmployee")
+//	public String deleteEmployee(Model model,@RequestParam("empid") Long id) {
+//		System.out.println(id);
+//		employeeService.deleteEmployee(id);
+//		return "redirect:/emplist";
+//	}
+	@GetMapping("/editemp")
+	public String updateEmployee(Model model, @RequestParam("empid") Long id) {
+	    Employee employee = employeeService.getEmployeeById(id);
+	    model.addAttribute("employee", employee); // Changed attribute name to "employee"
+	    return "EditEmployeeForm";
+	}
+
+	@PostMapping("/update")
+	public String updateEmployeeDetail(@ModelAttribute("employee") Employee employee) {
+		System.out.println(employee.toString());
+	    return "redirect:/emplist"; // Redirect to employee list page
 	}
 	
 
