@@ -4,7 +4,9 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.ems.employee.model.Employee;
+import org.ems.employee.model.Role;
 import org.ems.employee.service.EmployeeService;
+import org.ems.employee.service.RoleService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -20,9 +23,11 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class AdminController {
 	private final EmployeeService employeeService;
+	private final RoleService roleService;
 
-	public AdminController(EmployeeService employeeService) {
+	public AdminController(EmployeeService employeeService, RoleService roleService) {
 		this.employeeService = employeeService;
+		this.roleService = roleService;
 	}
 
 	@GetMapping("/")
@@ -49,9 +54,9 @@ public class AdminController {
 	}
 
 	@RequestMapping(value = "/addEmployee", method = { RequestMethod.POST })
-	public String submitEmpForm(@RequestParam("employeeName") String name, @RequestParam("email") String email,@RequestParam("address") String address,
-			@RequestParam("phoneNo") String phoneNo, @RequestParam("dob") LocalDate dob,
-			@RequestParam("salary") Double salary) {
+	public String submitEmpForm(@RequestParam("employeeName") String name, @RequestParam("email") String email,
+			@RequestParam("address") String address, @RequestParam("phoneNo") String phoneNo,
+			@RequestParam("dob") LocalDate dob, @RequestParam("salary") Double salary) {
 //		if(result.hasErrors()) {
 //			return "redirect:/emplist";
 //    	@ModelAttribute("empForm") Employee emp,
@@ -70,8 +75,7 @@ public class AdminController {
 		// Print all request parameters
 
 		return "redirect:/emplist";
-		
-		
+
 	}
 //	@RequestMapping(value="/update",method= {RequestMethod.POST})
 //	@GetMapping("/editemp")
@@ -82,32 +86,60 @@ public class AdminController {
 //		System.out.println(id);
 //		return "EditEmployeeForm";
 //	}
-	
+
 //	@RequestMapping(value="/update",method = {RequestMethod.POST})
 //	public String updateEmployeeDetail(Model model,@ModelAttribute("updateEmp") Employee employee) {
 //		System.out.println(employee.toString());
 //		return "redirect:/EditEmployeeForm";
 //	}
 //	
-	@GetMapping(value="/deleteEmployee")
-	public String deleteEmployee(Model model,@RequestParam("empid") Long id) {
+	@GetMapping(value = "/deleteEmployee")
+	public String deleteEmployee(Model model, @RequestParam("empid") Long id) {
 		System.out.println(id);
 		employeeService.deleteEmployee(id);
 		return "redirect:/emplist";
 	}
+
 	@GetMapping("/editemp")
 	public String updateEmployee(Model model, @RequestParam("empid") Long id) {
-	    Employee employee = employeeService.getEmployeeById(id);
-	    model.addAttribute("employee", employee); // Changed attribute name to "employee"
-	    return "EditEmployeeForm";
+		Employee employee = employeeService.getEmployeeById(id);
+		model.addAttribute("employee", employee); // Changed attribute name to "employee"
+		return "EditEmployeeForm";
 	}
 
 	@PostMapping("/update")
 	public String updateEmployeeDetail(@ModelAttribute("employee") Employee employee) {
 		System.out.println(employee.toString());
 		employeeService.UpdateEmployee(employee);
-	    return "redirect:/emplist"; // Redirect to employee list page
+		return "redirect:/emplist"; // Redirect to employee list page
 	}
-	
 
+	@GetMapping("/roles")
+	public ModelAndView roles(Model model) {
+		ModelAndView mvm = new ModelAndView("AddRole");
+		List<Role> roles = roleService.getAllRole();
+		List<Employee> emps = employeeService.getAllEmployee();
+		System.out.println(roles);
+		mvm.addObject("roles", roles);
+		mvm.addObject("emps", emps);
+		return mvm;
+	}
+
+	@PostMapping("/addRole")
+	public String addRole(@RequestParam("roleName") String roleName, @RequestParam("roleDescription") String roleDesc,
+			Model model) {
+		System.out.println(roleName + " " + roleDesc);
+		roleService.createRole(roleName, roleDesc);
+		List<Role> roles = roleService.getAllRole();
+		List<Employee> emps = employeeService.getAllEmployee();
+		model.addAttribute("emps", emps);
+		model.addAttribute("roles", roles);
+		return "AddRole";
+	}
+
+	@PostMapping("/assignRole")
+	public String assignRole(@RequestParam("employeeId") Long empId, @RequestParam("roleId") Long roleId) {
+       roleService.assignRoleToEmployee(empId, roleId);
+       return "AddRole";
+	}
 }
