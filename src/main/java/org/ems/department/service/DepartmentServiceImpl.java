@@ -6,6 +6,7 @@ import org.ems.department.repository.DepartmentRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class DepartmentServiceImpl implements DepartmentService {
@@ -26,5 +27,22 @@ public class DepartmentServiceImpl implements DepartmentService {
     @Override
     public List<Department> getAllDepartments() {
         return departmentRepository.findAll();
+    }
+
+    @Override
+    public void updateDepartment(Department department) {
+        departmentRepository.save(department);
+    }
+
+    @Override
+    public Department getDepartmentById(String id) {
+        Optional<Department> byId = departmentRepository.findById(id);
+        return byId.get();
+    }
+
+    @Override
+    public void deleteDepartment(String id) {
+        Optional<Department> byId = departmentRepository.findById(id);
+        departmentRepository.delete(byId.get());
     }
 }
