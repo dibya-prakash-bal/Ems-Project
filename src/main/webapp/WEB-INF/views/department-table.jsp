@@ -224,11 +224,12 @@
                                     <tr>
                                         <td>${dep.departmentName}</td>
                                         <td>${dep.description}</td>
-                                        <td>
-                                            <button type="button" class="btn btn-warning"
-                                                    onclick="editEmployee(${dep.departmentId})">Edit</button>
-                                            <button type="button" class="btn btn-danger"
-                                                    onclick="deleteEmployee(${dep.departmentId})">Delete</button>
+                                        <td><a
+                                                href="updateDept?deptid=${dep.departmentId}"
+                                                class="btn btn-outline-warning">Edit</a>
+
+                                            <a
+                                                    href="deleteDept?deptid=${dep.departmentId}"><button class="btn btn-danger" type="button">Delete</button></a>
                                         </td>
                                     </tr>
                                 </c:forEach>

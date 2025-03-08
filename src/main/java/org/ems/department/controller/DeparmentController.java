@@ -5,10 +5,7 @@ import org.ems.department.model.Department;
 import org.ems.department.service.DepartmentService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -50,6 +47,25 @@ public class DeparmentController {
     @GetMapping("/saveDept")
     public String addDepartment() {
         return "AddDept";
+    }
+
+    @GetMapping("/updateDept")
+    public String updateDepartment(Model model,@RequestParam("deptid") String id) {
+        Department department=departmentService.getDepartmentById(id);
+        model.addAttribute("department", department);
+        return "EditDepartmentForm";
+    }
+
+    @PostMapping("/updateDept")
+    public String updateDepartmentDetail(@ModelAttribute Department department) {
+        departmentService.updateDepartment(department);
+        return "redirect:/deptlist";
+    }
+
+    @GetMapping("/deleteDept")
+    public String deleteDepartment(@RequestParam("deptid") String id) {
+        departmentService.deleteDepartment(id);
+        return "redirect:/deptlist";
     }
 
 
