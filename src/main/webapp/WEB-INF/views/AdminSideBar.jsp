@@ -20,7 +20,7 @@
 
 			<li class="nav-item"><a class="nav-link" href="emplist"> <i
 					class="fas fa-table"> </i><span>Employees</span></a> <a
-				class="nav-link" href="/table.html"><i class="fas fa-table"></i><span>Managers
+				class="nav-link" href="roles"><i class="fas fa-table"></i><span>Roles
 						</span></a><a class="nav-link" href="/table.html"><i
 					class="fas fa-table"></i><span>Hr </span></a></li>
 
