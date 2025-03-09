@@ -3,6 +3,8 @@ package org.ems.employee.model;
 
 import java.time.LocalDate;
 
+import org.ems.department.model.Department;
+
 import jakarta.annotation.Generated;
 import jakarta.persistence.Column;
 
@@ -12,8 +14,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
-@Entity
+@Entity 
 public class Employee {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -28,9 +31,34 @@ public class Employee {
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
+    @ManyToOne
+    @JoinColumn(name = "department_id")
+    private Department department;
     
     
     
+
+	public Employee(Long employeeId, String employeeName, String address, String phoneNo, String email, LocalDate dob,
+			Double salary, Role role, Department department) {
+		super();
+		this.employeeId = employeeId;
+		this.employeeName = employeeName;
+		this.address = address;
+		this.phoneNo = phoneNo;
+		this.email = email;
+		this.dob = dob;
+		this.salary = salary;
+		this.role = role;
+		this.department = department;
+	}
+
+	public Department getDepartment() {
+		return department;
+	}
+
+	public void setDepartment(Department department) {
+		this.department = department;
+	}
 
 	public Employee(Long employeeId, String employeeName, String address, String phoneNo, String email, LocalDate dob,
 			Double salary, Role role) {
