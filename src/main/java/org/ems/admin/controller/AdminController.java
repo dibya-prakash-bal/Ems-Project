@@ -1,12 +1,18 @@
 package org.ems.admin.controller;
 
 import java.time.LocalDate;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
+import org.ems.department.model.Department;
+import org.ems.department.service.DepartmentService;
 import org.ems.employee.model.Employee;
 import org.ems.employee.model.Role;
 import org.ems.employee.service.EmployeeService;
 import org.ems.employee.service.RoleService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,8 +21,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 
 @Controller
@@ -24,10 +32,12 @@ import lombok.extern.slf4j.Slf4j;
 public class AdminController {
 	private final EmployeeService employeeService;
 	private final RoleService roleService;
+	private final DepartmentService deptService;
 
-	public AdminController(EmployeeService employeeService, RoleService roleService) {
+	public AdminController(EmployeeService employeeService, RoleService roleService, DepartmentService deptService) {
 		this.employeeService = employeeService;
 		this.roleService = roleService;
+		this.deptService = deptService;
 	}
 
 	@GetMapping("/")
@@ -119,27 +129,145 @@ public class AdminController {
 		ModelAndView mvm = new ModelAndView("AddRole");
 		List<Role> roles = roleService.getAllRole();
 		List<Employee> emps = employeeService.getAllEmployee();
+		List<Department> depts = deptService.getAllDepartments();
 		System.out.println(roles);
 		mvm.addObject("roles", roles);
 		mvm.addObject("emps", emps);
+		mvm.addObject("departments", depts);
 		return mvm;
 	}
 
-	@PostMapping("/addRole")
-	public String addRole(@RequestParam("roleName") String roleName, @RequestParam("roleDescription") String roleDesc,
-			Model model) {
-		System.out.println(roleName + " " + roleDesc);
-		roleService.createRole(roleName, roleDesc);
-		List<Role> roles = roleService.getAllRole();
-		List<Employee> emps = employeeService.getAllEmployee();
-		model.addAttribute("emps", emps);
-		model.addAttribute("roles", roles);
-		return "AddRole";
+//	@PostMapping("/addRole")
+//	public String addRole(@RequestParam("roleName") String roleName, @RequestParam("roleDescription") String roleDesc,
+//			Model model) {
+//		System.out.println(roleName + " " + roleDesc);
+//		roleService.createRole(roleName, roleDesc);
+//		List<Role> roles = roleService.getAllRole();
+//		List<Employee> emps = employeeService.getAllEmployee();
+//		model.addAttribute("emps", emps);
+//		model.addAttribute("roles", roles);
+//		return "AddRole";
+//	}
+
+	/*
+	 * @PostMapping("/assignRole") public String
+	 * assignRole(@RequestParam("employeeId") Long empId, @RequestParam("roleId")
+	 * Long roleId) { roleService.assignRoleToEmployee(empId, roleId); return
+	 * "AddRole"; }
+	 */
+
+	/*
+	 * @PostMapping("/assignRole") public ResponseEntity<?>
+	 * assignRole(@RequestParam("employeeId") Long empId, @RequestParam("roleId")
+	 * Long roleId) { try { roleService.assignRoleToEmployee(empId, roleId); return
+	 * ResponseEntity.ok("Role assigned successfully"); } catch (Exception e) {
+	 * return ResponseEntity.badRequest().body("Error assigning role: " +
+	 * e.getMessage()); } }
+	 */
+	@PostMapping("/assignRole")
+	@ResponseBody
+	public ResponseEntity<?> assignRole(@RequestParam("employeeId") Long empId, @RequestParam("roleId") Long roleId) {
+		Map<String, Object> response = new HashMap<>();
+		try {
+			roleService.assignRoleToEmployee(empId, roleId);
+			response.put("success", true);
+			response.put("message", "Role assigned successfully");
+			response.put("redirectUrl", "/roles"); // Add redirect URL to response
+			return ResponseEntity.ok(response);
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", "Error assigning role: " + e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+		}
 	}
 
-	@PostMapping("/assignRole")
-	public String assignRole(@RequestParam("employeeId") Long empId, @RequestParam("roleId") Long roleId) {
-       roleService.assignRoleToEmployee(empId, roleId);
-       return "AddRole";
+	/*
+	 * Add Role Method
+	 * 
+	 */
+	@PostMapping("/addRole")
+	@ResponseBody
+	public ResponseEntity<?> addRole(@RequestParam("roleName") String roleName,
+			@RequestParam("roleDescription") String roleDesc) {
+		Map<String, Object> response = new HashMap<>();
+
+		try {
+			// Validate input
+			if (roleName == null || roleName.trim().isEmpty()) {
+				throw new IllegalArgumentException("Role name is required");
+			}
+
+			// Create role
+			roleService.createRole(roleName, roleDesc);
+
+			// Get updated lists
+//			List<Role> roles = roleService.getAllRole();
+//			List<Employee> emps = employeeService.getAllEmployee();
+
+			// Prepare success response
+			response.put("success", true);
+			response.put("message", "Role added successfully");
+//			response.put("roles", roles);
+//			response.put("employees", emps);
+			response.put("redirectUrl", "/roles");
+
+			return ResponseEntity.ok(response);
+
+		} catch (IllegalArgumentException e) {
+			response.put("success", false);
+			response.put("message", e.getMessage());
+			return ResponseEntity.badRequest().body(response);
+
+		} catch (Exception e) {
+			response.put("success", false);
+			response.put("message", "Error adding role: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
 	}
+
+	/*
+	 * Assign Department to Employee
+	 * 
+	 */
+	@PostMapping("/assignEmployeeToDepartment")
+	@ResponseBody
+	public ResponseEntity<?> assignEmployeeToDepartment(@RequestParam("employeeId") Long empId, 
+	                                                   @RequestParam("departmentId") String deptId) {
+	    Map<String, Object> response = new HashMap<>();
+	    try {
+	        // Input validation
+	        if (empId == null || deptId == null) {
+	            throw new IllegalArgumentException("Employee ID and Department ID are required");
+	        }
+
+	        // Assign department to employee
+	        deptService.assignDepartmentToEmplyoee(deptId,empId);
+
+	        // Prepare success response
+	        response.put("success", true);
+	        response.put("message", "Employee assigned to department successfully");
+	        response.put("redirectUrl", "/roles");
+	        return ResponseEntity.ok(response);
+
+	    } catch (EntityNotFoundException e) {
+	        // Handle case when employee or department not found
+	        response.put("success", false);
+	        response.put("message", e.getMessage());
+	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+
+	    } catch (IllegalArgumentException e) {
+	        // Handle invalid input
+	        response.put("success", false);
+	        response.put("message", e.getMessage());
+	        return ResponseEntity.badRequest().body(response);
+
+	    } catch (Exception e) {
+	        // Handle other exceptions
+	        response.put("success", false);
+	        response.put("message", "Error assigning department: " + e.getMessage());
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+	    }
+	}
+	
+	
 }
