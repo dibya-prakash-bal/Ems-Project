@@ -3,6 +3,7 @@ package org.ems.employee.service;
 import java.util.List;
 
 import org.ems.employee.model.Employee;
+import org.ems.employee.model.LeaveRequest;
 
 public interface EmployeeService {
 	void addEmployee(Employee employee);
@@ -12,4 +13,12 @@ public interface EmployeeService {
 	Employee getEmployeeById(Long id);
 	void UpdateEmployee(Employee emp);
 
+	List<LeaveRequest> getAllLeaveRequest();
+
+	List<LeaveRequest> getLeaveRequestByEmployeeId(String id);
+
+	LeaveRequest getLeaveRequestById(Long id);
+
+	void AddLeaveRequest(LeaveRequest leave);
+	void UpdateLeaveRequest(LeaveRequest leave);
 }
