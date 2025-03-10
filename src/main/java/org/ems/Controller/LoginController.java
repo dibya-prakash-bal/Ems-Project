@@ -17,4 +17,14 @@ public class LoginController {
     public String forgetPass() {
         return "forgetpass";
     }
+
+    @GetMapping("/otp-verify")
+    public String otpVerify() {
+        return "otpVerify";
+    }
+
+    @GetMapping("reset-pass")
+    public String resetPass() {
+        return "resetPass";
+    }
 }

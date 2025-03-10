@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Forgot Password</title>
+    <title>Reset Password</title>
     <style>
         * {
             margin: 0;
@@ -15,17 +15,17 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            height: 100vh;
             background-color: #f9f9f9;
         }
         .container {
             display: flex;
             background: white;
             width: 80%;
-            max-width: 1200px;
-            border-radius: 15px;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.05);
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             overflow: hidden;
+            padding: 20px;
         }
         .left {
             flex: 1;
@@ -35,46 +35,38 @@
             background-color: #f4f4f4;
             padding: 20px;
         }
-        .left img {
-            width: 200px; /* Reduced image size */
-        }
         .right {
             flex: 1;
-            padding: 40px; /* Reduced padding */
+            padding: 40px;
             display: flex;
             flex-direction: column;
             justify-content: center;
         }
         h2 {
             margin-bottom: 10px;
-            font-size: 22px; /* Reduced font size */
+            font-size: 20px;
         }
         p {
-            font-size: 16px; /* Reduced font size */
-            color: #666;
-            margin-bottom: 20px;
-        }
-        input {
-            width: 100%;
-            padding: 10px; /* Reduced padding */
-            margin-bottom: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
             font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #4CAF50;
+            border-radius: 5px;
         }
         button {
             width: 100%;
-            padding: 12px; /* Reduced padding */
-            font-size: 16px; /* Reduced font size */
+            padding: 10px;
             background-color: #6c5ce7;
             color: white;
             border: none;
             border-radius: 5px;
             cursor: pointer;
-            transition: background 0.3s;
-        }
-        button:hover {
-            background-color: #4a3db3;
         }
         a {
             display: block;
@@ -82,7 +74,6 @@
             margin-top: 10px;
             color: #6c5ce7;
             text-decoration: none;
-            font-size: 14px;
         }
         a:hover {
             text-decoration: underline;
@@ -92,15 +83,40 @@
 <body>
 <div class="container">
     <div class="left">
-        <img src="assets/img/svg/loginimage.svg" alt="Illustration">
+        <img src="assets/img/svg/loginimage.svg" alt="Illustration" width="150">
     </div>
     <div class="right">
-        <h2>Forgot Password</h2>
-        <p>Enter your email address to reset your password.</p>
-        <input type="email" placeholder="Email">
-        <button onclick="window.location.href='otp-verify'">Send Link</button>
-        <a href="/">Remember your password? Login</a>
+        <h2>Reset Password</h2>
+        <p>Enter the email address tied to your account, we would help you reset your password</p>
+            <input type="email" id="email" placeholder="Enter your email" disabled>
+        <p>Reset password</p>
+        <input type="password" id="password" placeholder="Enter the password">
+        <input type="password" id="confirm-password" placeholder="Re-enter the password">
+        <button onclick="resetPassword()">Confirm</button>
+        <a href="/">You remember your password? Login</a>
     </div>
 </div>
+
+<script>
+    function resetPassword() {
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const confirmPassword = document.getElementById('confirm-password').value;
+
+        if (!email) {
+            alert('Please enter your email');
+            return;
+        }
+        if (!password) {
+            alert('Please enter a password');
+            return;
+        }
+        if (password !== confirmPassword) {
+            alert('Passwords do not match');
+            return;
+        }
+        alert('Password reset successful!');
+    }
+</script>
 </body>
 </html>
