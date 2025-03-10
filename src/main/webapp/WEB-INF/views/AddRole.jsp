@@ -598,8 +598,8 @@
 
 		</script>
 		<script>
-$(document).ready(function() {
-    $('#addRoleForm').submit(function(e) {
+		$(document).ready(function() {
+    	$('#addRoleForm').submit(function(e) {
         e.preventDefault();
         
         // Get form elements
