@@ -330,8 +330,7 @@
 													</div>
 												</div>
 												<div class="mb-3">
-													<button class="btn btn-primary btn-sm" type="submit">Save
-														Settings</button>
+													
 												</div>
 											</form>
 										</div>
@@ -363,9 +362,7 @@
 														</div>
 													</div>
 												</div>
-												<div class="mb-3">
-													<button class="btn btn-primary btn-sm" type="submit">Save&nbsp;Settings</button>
-												</div>
+												 
 											</form>
 										</div>
 									</div>
@@ -394,10 +391,7 @@
 														new replies</strong></label>
 											</div>
 										</div>
-										<div class="mb-3">
-											<button class="btn btn-primary btn-sm" type="submit">Save
-												Settings</button>
-										</div>
+										
 									</form>
 								</div>
 							</div>

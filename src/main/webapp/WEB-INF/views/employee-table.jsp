@@ -211,38 +211,40 @@
 							</div>
 							<div class="table-responsive table mt-2" id="dataTable"
 								role="grid" aria-describedby="dataTable_info">
-								<table class="table my-0" id="dataTable">
+								<table class="table my-0 align-middle" id="dataTable">
 									<thead>
-										<tr>
+										<tr class="text-center">
 											<th>Name</th>
 											<th>Email</th>
 											<th>Address</th>
 											<th>phone</th>
 											<th>Dob</th>
 											<th>Salary</th>
+											<th>Role</th>
+											<th>Department</th>
 											<th>Actions</th>
 										</tr>
 									</thead>
-									<tbody>
+									<tbody class="text-center align-middle">
 										<c:forEach var="emp" items="${emplist}">
 											<tr>
-												<td>${emp.employeeName}</td>
-												<td>${emp.email}</td>
-												<td>${emp.address}</td>
-												<td>${emp.phoneNo }</td>
-												<td>${emp.dob}</td>
-												<td>${emp.salary}</td>
-												<td><a
+												<td class="align-middle">${emp.employeeName}</td>
+												<td class="align-middle">${emp.email}</td>
+												<td class="align-middle">${emp.address}</td>
+												<td class="align-middle">${emp.phoneNo}</td>
+												<td class="align-middle">${emp.dob}</td>
+												<td class="align-middle">${emp.salary}</td>
+												<td class="align-middle">${emp.role.roleName}</td>
+												<td class="align-middle">${emp.department.departmentName}</td>
+												<td class="align-middle"><a
 													href="editemp?empid=${emp.employeeId}"
-													class="btn btn-outline-warning">Edit</a>
-
-													<a  
-														href="deleteEmployee?empid=${emp.employeeId}"><button class="btn btn-danger" type="button">Delete</button></a>
-												</td>
+													class="btn btn-outline-warning">Edit</a> <a
+													href="deleteEmployee?empid=${emp.employeeId}">
+														<button class="btn btn-danger" type="button">Delete</button>
+												</a></td>
 											</tr>
 										</c:forEach>
 									</tbody>
-
 								</table>
 							</div>
 							<div class="row">
