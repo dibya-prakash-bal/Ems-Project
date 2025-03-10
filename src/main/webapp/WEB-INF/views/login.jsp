@@ -1,79 +1,56 @@
 <!DOCTYPE html>
-<html data-bs-theme="light" lang="en">
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
-<title>Login - Brand</title>
-<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
-<link rel="stylesheet" href="assets/css/styles.min.css">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Eduvance Sign In</title>
+	<link rel="stylesheet" href="assets/css/styleslogin.css">
 </head>
-<body class="bg-gradient-primary">
-	<div class="container">
-		<div class="row justify-content-center">
-			<div class="col-md-9 col-lg-12 col-xl-10">
-				<div class="card shadow-lg o-hidden border-0 my-5">
-					<div class="card-body p-0">
-						<div class="row">
-							<div class="col-lg-6 d-none d-lg-flex">
-								<div class="flex-grow-1 bg-login-image"
-									style="background-image: url(&quot;assets/img/dogs/image3.jpeg&quot;);"></div>
-							</div>
-							<div class="col-lg-6">
-								<div class="p-5">
-									<div class="text-center">
-										<h4 class="text-dark mb-4">Welcome Back!</h4>
-									</div>
-									<form class="user">
-										<div class="mb-3">
-											<input class="form-control form-control-user" type="email"
-												id="exampleInputEmail" aria-describedby="emailHelp"
-												placeholder="Enter Email Address..." name="email">
-										</div>
-										<div class="mb-3">
-											<input class="form-control form-control-user" type="password"
-												id="exampleInputPassword" placeholder="Password"
-												name="password">
-										</div>
-										<div class="mb-3">
-											<div class="custom-checkbox small">
-												<div class="form-check">
-													<input class="form-check-input" type="checkbox"
-														id="formCheck-1"><label class="form-check-label"
-														for="formCheck-1">Remember Me</label>
-												</div>
-											</div>
-										</div>
-										<button class="btn btn-primary d-block btn-user w-100"
-											type="submit">Login</button>
-										<hr>
-										<a
-											class="btn btn-primary d-block btn-google btn-user w-100 mb-2"
-											role="button"><i class="fab fa-google"></i>&nbsp; Login
-											with Google</a><a
-											class="btn btn-primary d-block btn-facebook btn-user w-100"
-											role="button"><i class="fab fa-facebook-f"></i>&nbsp;
-											Login with Facebook</a>
-										<hr>
-									</form>
-									<div class="text-center">
-										<a class="small" href="forgot-password.html">Forgot
-											Password?</a>
-									</div>
-									<div class="text-center">
-										<a class="small" href="register.html">Create an Account!</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
+<body>
+<div class="container">
+	<div class="left-side">
+		<img src="assets/img/svg/loginimage.svg" alt="Eduvance Illustration">
+	</div>
+	<div class="right-side">
+		<h1>Sign in to EvoStaff</h1>
+		<p class="tagline">Education Reimagined.</p>
+
+		<form id="loginForm">
+			<div class="form-group">
+				<label for="email">Email</label>
+				<input type="email" id="email" name="email" placeholder="Email">
 			</div>
+
+			<div class="form-group">
+				<label for="password">Password</label>
+				<input type="password" id="password" name="password" placeholder="Password">
+			</div>
+
+			<div class="form-group remember-forgot">
+				<label class="remember-me">
+					<input type="checkbox" id="remember" name="remember">RememberMe
+				</label>
+				<a href="ForgetPass">Forgot Password?</a>
+			</div>
+
+			<button type="submit" class="sign-in-button">Sign in</button>
+		</form>
+
+		<div class="or-login-with">
+			<hr>
+			<span>Or login with</span>
+			<hr>
+		</div>
+
+		<div class="social-login">
+			<button class="google-button">
+				<i class="fab fa-google"></i> Google
+			</button>
 		</div>
 	</div>
-	<script src="assets/js/jquery.min.js"></script>
-	<script src="assets/bootstrap/js/bootstrap.min.js"></script>
-	<script src="assets/js/script.min.js"></script>
+</div>
+
+<script src="assets/js/scriptlogin.js"></script>
+<script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
 </body>
 </html>
