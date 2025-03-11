@@ -1,6 +1,7 @@
 package org.ems.admin.controller;
 
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,17 +67,20 @@ public class AdminController {
 	@RequestMapping(value = "/addEmployee", method = { RequestMethod.POST })
 	public String submitEmpForm(@RequestParam("employeeName") String name, @RequestParam("email") String email,
 			@RequestParam("address") String address, @RequestParam("phoneNo") String phoneNo,
-			@RequestParam("dob") LocalDate dob, @RequestParam("salary") Double salary) {
+			@RequestParam("dob") String dobString, @RequestParam("salary") Double salary , @RequestParam("password") String password) {
 //		if(result.hasErrors()) {
 //			return "redirect:/emplist";
 //    	@ModelAttribute("empForm") Employee emp,
 //    	, BindingResult result
 //		}
+		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+		LocalDate dob = LocalDate.parse(dobString, formatter);
 		System.out.println(name + " " + email + " " + phoneNo + " " + dob + " " + salary);
 //	   System.out.println(emp.toString());
 		Employee newEmp = new Employee();
 		newEmp.setEmployeeName(name);
 		newEmp.setEmail(email);
+		newEmp.setPassword(password);
 		newEmp.setAddress(address);
 		newEmp.setDob(dob);
 		newEmp.setPhoneNo(phoneNo);
@@ -231,43 +235,42 @@ public class AdminController {
 	 */
 	@PostMapping("/assignEmployeeToDepartment")
 	@ResponseBody
-	public ResponseEntity<?> assignEmployeeToDepartment(@RequestParam("employeeId") Long empId, 
-	                                                   @RequestParam("departmentId") String deptId) {
-	    Map<String, Object> response = new HashMap<>();
-	    try {
-	        // Input validation
-	        if (empId == null || deptId == null) {
-	            throw new IllegalArgumentException("Employee ID and Department ID are required");
-	        }
+	public ResponseEntity<?> assignEmployeeToDepartment(@RequestParam("employeeId") Long empId,
+			@RequestParam("departmentId") String deptId) {
+		Map<String, Object> response = new HashMap<>();
+		try {
+			// Input validation
+			if (empId == null || deptId == null) {
+				throw new IllegalArgumentException("Employee ID and Department ID are required");
+			}
 
-	        // Assign department to employee
-	        deptService.assignDepartmentToEmplyoee(deptId,empId);
+			// Assign department to employee
+			deptService.assignDepartmentToEmplyoee(deptId, empId);
 
-	        // Prepare success response
-	        response.put("success", true);
-	        response.put("message", "Employee assigned to department successfully");
-	        response.put("redirectUrl", "/roles");
-	        return ResponseEntity.ok(response);
+			// Prepare success response
+			response.put("success", true);
+			response.put("message", "Employee assigned to department successfully");
+			response.put("redirectUrl", "/roles");
+			return ResponseEntity.ok(response);
 
-	    } catch (EntityNotFoundException e) {
-	        // Handle case when employee or department not found
-	        response.put("success", false);
-	        response.put("message", e.getMessage());
-	        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
+		} catch (EntityNotFoundException e) {
+			// Handle case when employee or department not found
+			response.put("success", false);
+			response.put("message", e.getMessage());
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(response);
 
-	    } catch (IllegalArgumentException e) {
-	        // Handle invalid input
-	        response.put("success", false);
-	        response.put("message", e.getMessage());
-	        return ResponseEntity.badRequest().body(response);
+		} catch (IllegalArgumentException e) {
+			// Handle invalid input
+			response.put("success", false);
+			response.put("message", e.getMessage());
+			return ResponseEntity.badRequest().body(response);
 
-	    } catch (Exception e) {
-	        // Handle other exceptions
-	        response.put("success", false);
-	        response.put("message", "Error assigning department: " + e.getMessage());
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-	    }
+		} catch (Exception e) {
+			// Handle other exceptions
+			response.put("success", false);
+			response.put("message", "Error assigning department: " + e.getMessage());
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
+		}
 	}
-	
-	
+
 }
