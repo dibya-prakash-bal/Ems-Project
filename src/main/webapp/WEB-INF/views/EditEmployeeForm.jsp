@@ -69,6 +69,11 @@
 						<form:input path="email" type="email" class="form-control"
 							required="required" />
 					</div>
+					<div class="mb-3">
+						<label for="password" class="form-label">Password *</label>
+						<form:input path="password" type="text" class="form-control"
+							required="required" />
+					</div>
 
 					<div class="mb-3">
 						<label for="dob" class="form-label">Date of Birth *</label>
