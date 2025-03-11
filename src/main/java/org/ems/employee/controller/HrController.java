@@ -43,15 +43,20 @@ public class HrController {
 		return "leaveList";
 	}
 
+
+
 	@GetMapping("/Leave-details")
-	public String leaveDetails(Model model,@RequestParam long leaveId){
-		LeaveRequest leaveRequestById = employeeService.getLeaveRequestById(leaveId);
-		model.addAttribute("leaveRequestById", leaveRequestById);
-		return "leaveDetails";
+	public String leaveDetails(@RequestParam("leaveId") long leaveId, Model model) {
+		LeaveRequest leaveRequest = employeeService.getLeaveRequestById(leaveId);
+		model.addAttribute("leaveForm", leaveRequest); // Pass LeaveRequest object
+		return "leaveDetails"; // JSP page where form is rendered
 	}
 
 	@PostMapping("/Update-leave")
-	public String leaveUpdate(@RequestParam long leaveId,@RequestParam("status") String status){
+	public String leaveUpdate(@RequestParam("leaveId") long leaveId,@RequestParam("status") String status){
+
+		System.out.println(status);
+
 		LeaveRequest leaveRequestById = employeeService.getLeaveRequestById(leaveId);
 		leaveRequestById.setStatus(status);
 		employeeService.UpdateLeaveRequest(leaveRequestById);

@@ -16,17 +16,17 @@
 			<li class="nav-item"><a class="nav-link" href="Hr-profile">
 				<i class="fas fa-user"></i><span>Profile</span></a>
 			</li>
-			<li class="nav-item"><a class="nav-link" href="deptlist">
-				<i class="far fa-user-circle"></i><span>Departments</span></a>
-			</li>
+<%--			<li class="nav-item"><a class="nav-link" href="deptlist">--%>
+<%--				<i class="far fa-user-circle"></i><span>Departments</span></a>--%>
+<%--			</li>--%>
 
 			<li class="nav-item">
-				<a class="nav-link" href="emplist"> <i class="fas fa-table"> </i><span>Employees</span></a>
-				<a class="nav-link" href="/table.html"><i class="fas fa-table"></i><span>Managers</span></a>
+				<a class="nav-link" href=""> <i class="fas fa-table"> </i><span>Employees</span></a>
+<%--				<a class="nav-link" href="/table.html"><i class="fas fa-table"></i><span>Managers</span></a>--%>
 			</li>
 			<li class="nav-item">
-				<a class="nav-link" href="addemp"><i class="fas fa-user-circle"></i><span>Add Employee</span></a>
-				<a class="nav-link" href="/register.html"><i class="fas fa-user-circle"></i><span>Add Manager</span></a>
+				<a class="nav-link" href="Leave-list"><i class="fas fa-user-circle"></i><span>Leave Management</span></a>
+<%--				<a class="nav-link" href="/register.html"><i class="fas fa-user-circle"></i><span>Add Manager</span></a>--%>
 			</li>
 		</ul>
 		<div class="text-center d-none d-md-inline">

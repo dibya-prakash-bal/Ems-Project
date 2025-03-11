@@ -36,10 +36,29 @@ public class EmployeeController {
     }
 
     @PostMapping("/Request-leave")
-    public String createLeaveRequest(LeaveRequest leaveRequest){
+    public String createLeaveRequest(
+            @RequestParam("empId") String empId,
+            @RequestParam("leaveType") String leaveType,
+            @RequestParam(value = "description", required = false) String description,
+            @RequestParam("contactNumber") String contactNumber)
+    {
+
+        // Create LeaveRequest object
+        LeaveRequest leaveRequest = new LeaveRequest();
+        leaveRequest.setEmpId(empId);
+        leaveRequest.setLeaveType(leaveType);
+        leaveRequest.setLeaveDescription(description); // Assuming `description` is mapped to `leaveDescription`
+        leaveRequest.setContactNumber(contactNumber);
+//        leaveRequest.setFromDate(fromDate);
+//        leaveRequest.setToDate(toDate);
+        leaveRequest.setStatus("Pending"); // Default status
+
+        // Save Leave Request
         employeeService.AddLeaveRequest(leaveRequest);
+
         return "redirect:/Leave-form";
     }
+
 
     @GetMapping("/Leave-form")
     public String leaveForm(Model model){
