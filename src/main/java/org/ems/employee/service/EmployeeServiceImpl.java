@@ -4,16 +4,23 @@ import java.util.List;
 import java.util.Optional;
 
 import org.ems.employee.model.Employee;
+import org.ems.employee.model.LeaveRequest;
 import org.ems.employee.repository.EmployeeRepository;
+import org.ems.employee.repository.LeaveRepository;
 import org.springframework.stereotype.Service;
 @Service
 public class EmployeeServiceImpl implements EmployeeService {
 	private final EmployeeRepository employeeRepository;
+
+	private final LeaveRepository leaveRepository;
 	 
-	public EmployeeServiceImpl(EmployeeRepository employeeRepository) {
+	public EmployeeServiceImpl(EmployeeRepository employeeRepository, LeaveRepository leaveRepository) {
 		
 		this.employeeRepository = employeeRepository;
-	}
+        this.leaveRepository = leaveRepository;
+    }
+
+
 
 
 
@@ -61,14 +68,34 @@ public class EmployeeServiceImpl implements EmployeeService {
 		
 	}
 
+	@Override
+	public List<LeaveRequest> getAllLeaveRequest() {
+		return leaveRepository.findAll();
+	}
 
+	@Override
+	public List<LeaveRequest> getLeaveRequestByEmployeeId(String id) {
+		return leaveRepository.findByEmpId(id);
+	}
 
+	@Override
+	public LeaveRequest getLeaveRequestById(Long id) {
+		return leaveRepository.findById(id).get();
+	}
 
-	
-	
-	
-	
-	
+	@Override
+	public void AddLeaveRequest(LeaveRequest leave) {
+		leaveRepository.save(leave);
+	}
+
+	@Override
+	public void UpdateLeaveRequest(LeaveRequest leave) {
+		Optional<LeaveRequest> byId = leaveRepository.findById(leave.getLeaveId());
+		byId.get().setStatus(leave.getStatus());
+		leaveRepository.save(byId.get());
+
+	}
+
 
 //	@Override
 //	public Employee getEmployeeById(Long id) {
