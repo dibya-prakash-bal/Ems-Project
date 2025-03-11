@@ -26,6 +26,7 @@ public class Employee {
     private String address;
     private String phoneNo;
     private String email;
+    private String password;
     private LocalDate dob;
     private Double salary;
     @ManyToOne
@@ -38,7 +39,7 @@ public class Employee {
     
     
 
-	public Employee(Long employeeId, String employeeName, String address, String phoneNo, String email, LocalDate dob,
+	public Employee(Long employeeId, String employeeName, String address, String phoneNo, String email,String password, LocalDate dob,
 			Double salary, Role role, Department department) {
 		super();
 		this.employeeId = employeeId;
@@ -46,10 +47,19 @@ public class Employee {
 		this.address = address;
 		this.phoneNo = phoneNo;
 		this.email = email;
+		this.password = password;
 		this.dob = dob;
 		this.salary = salary;
 		this.role = role;
 		this.department = department;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public Department getDepartment() {
