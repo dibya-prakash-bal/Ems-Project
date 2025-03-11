@@ -1,30 +1,70 @@
 package org.ems.Controller;
 
-import lombok.extern.slf4j.Slf4j;
+import org.ems.employee.model.Employee;
+import org.ems.employee.repository.EmployeeRepository;
+import org.ems.employee.service.EmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import jakarta.servlet.http.HttpSession;
 
 @Controller
-
 public class LoginController {
+	
+	private final EmployeeService employeeService;
+	
 
-    @GetMapping("/")
-    public String login() {
-        return "login";
-    }
+	public LoginController(EmployeeService employeeService) {
+//		super();
+		this.employeeService = employeeService;
+	}
 
-    @GetMapping("/ForgetPass")
-    public String forgetPass() {
-        return "forgetpass";
-    }
+	@GetMapping("/")
+	public String login() {
+		return "login";
+	}
 
-    @GetMapping("/otp-verify")
-    public String otpVerify() {
-        return "otpVerify";
-    }
+	@PostMapping("/login")
+	@ResponseBody // Add this annotation
+	public String processLogin(@RequestParam("email") String email,@RequestParam("password") String password, HttpSession session) {
+		// ... (your authentication logic) ...
+		System.out.println(email + " " + password);
+		
+		Employee authenticatedEmployee = employeeService.authenticateEmployee(email, password);
 
-    @GetMapping("reset-pass")
-    public String resetPass() {
-        return "resetPass";
-    }
+		if (authenticatedEmployee != null) {
+			// ...
+			String role = authenticatedEmployee.getRole().getRoleName();
+					
+
+			if ("Admin".equalsIgnoreCase(role)) {
+				return "redirect:/admin"; // Return redirect string
+			} else if ("HR".equalsIgnoreCase(role)) {
+				return "redirect:/HR";
+			} else {
+				return "redirect:/employee";
+			}
+		} else {
+			return "login?error"; // Return a string indicating login failure
+		}
+	}
+
+	@GetMapping("/ForgetPass")
+	public String forgetPass() {
+		return "forgetpass";
+	}
+
+	@GetMapping("/otp-verify")
+	public String otpVerify() {
+		return "otpVerify";
+	}
+
+	@GetMapping("reset-pass")
+	public String resetPass() {
+		return "resetPass";
+	}
 }
