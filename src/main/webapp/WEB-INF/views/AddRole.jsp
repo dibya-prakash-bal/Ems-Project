@@ -11,7 +11,6 @@
 <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
 <link rel="stylesheet" href="assets/fonts/fontawesome-all.min.css">
 <link rel="stylesheet" href="assets/css/styles.min.css">
-<!-- Add these in the head section of your JSP -->
 <link
 	href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
 	rel="stylesheet">
