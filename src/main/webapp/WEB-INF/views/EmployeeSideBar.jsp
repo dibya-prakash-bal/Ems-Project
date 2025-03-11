@@ -14,8 +14,8 @@
                 <i class="fas fa-tachometer-alt"></i><span>Dashboard</span></a></li>
             <li class="nav-item"><a class="nav-link" href="empprofile">
                 <i class="fas fa-user"></i><span>Profile</span></a></li>
-<%--            <li class="nav-item"><a class="nav-link" href="deptlist">--%>
-<%--                <i class="far fa-user-circle"></i><span>Departments</span></a></li>--%>
+            <li class="nav-item"><a class="nav-link" href="Leave-form">
+                <i class="far fa-user-circle"></i><span>Leave Request</span></a></li>
 
 <%--            <li class="nav-item"><a class="nav-link" href="emplist">--%>
 <%--                <i class="fas fa-table"> </i>--%>

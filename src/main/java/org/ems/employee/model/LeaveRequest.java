@@ -22,21 +22,27 @@ public class LeaveRequest {
 
     private String empName;
 
+    private String contactNumber;
+
     private String status;
 
     public LeaveRequest() {
     }
 
-    public Long getLeaveId() {
+    public long getLeaveId() {
         return leaveId;
     }
 
-    public void setLeaveId(Long leaveId) {
+    public void setLeaveId(long leaveId) {
         this.leaveId = leaveId;
     }
 
     public String getLeaveType() {
         return leaveType;
+    }
+
+    public void setLeaveType(String leaveType) {
+        this.leaveType = leaveType;
     }
 
     public String getLeaveDescription() {
@@ -45,6 +51,10 @@ public class LeaveRequest {
 
     public void setLeaveDescription(String leaveDescription) {
         this.leaveDescription = leaveDescription;
+    }
+
+    public String getEmpId() {
+        return empId;
     }
 
     public void setEmpId(String empId) {
@@ -57,6 +67,14 @@ public class LeaveRequest {
 
     public void setEmpName(String empName) {
         this.empName = empName;
+    }
+
+    public String getContactNumber() {
+        return contactNumber;
+    }
+
+    public void setContactNumber(String contactNumber) {
+        this.contactNumber = contactNumber;
     }
 
     public String getStatus() {
