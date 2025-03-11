@@ -21,4 +21,6 @@ public interface EmployeeService {
 
 	void AddLeaveRequest(LeaveRequest leave);
 	void UpdateLeaveRequest(LeaveRequest leave);
+	//Login authenticate
+	public Employee authenticateEmployee(String email, String password);
 }
