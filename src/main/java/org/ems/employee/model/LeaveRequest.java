@@ -1,105 +1,112 @@
 package org.ems.employee.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
-
+//import jakarta.persistence.;
 
 @Entity
 public class LeaveRequest {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long leaveId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private long leaveId;
 
+	private String leaveType;
 
-    private String leaveType;
+	@Column(length = 500)
+	private String leaveDescription;
 
-    @Column(length = 500)
-    private String leaveDescription;
+	private Long empId;
 
+	private String empName;
 
-    private String empId;
+	private String contactNumber;
 
-    private String empName;
+	private String status;
 
-    private String contactNumber;
+	
+	public long getLeaveId() {
+		return leaveId;
+	}
 
-    private String status;
+	public void setLeaveId(long leaveId) {
+		this.leaveId = leaveId;
+	}
 
-    public LeaveRequest() {
-    }
+	public String getLeaveType() {
+		return leaveType;
+	}
 
-    public long getLeaveId() {
-        return leaveId;
-    }
+	public void setLeaveType(String leaveType) {
+		this.leaveType = leaveType;
+	}
 
-    public void setLeaveId(long leaveId) {
-        this.leaveId = leaveId;
-    }
+	public String getLeaveDescription() {
+		return leaveDescription;
+	}
 
-    public String getLeaveType() {
-        return leaveType;
-    }
+	public void setLeaveDescription(String leaveDescription) {
+		this.leaveDescription = leaveDescription;
+	}
 
-    public void setLeaveType(String leaveType) {
-        this.leaveType = leaveType;
-    }
+	public Long getEmpId() {
+		return empId;
+	}
 
-    public String getLeaveDescription() {
-        return leaveDescription;
-    }
+	public void setEmpId(Long empId) {
+		this.empId = empId;
+	}
 
-    public void setLeaveDescription(String leaveDescription) {
-        this.leaveDescription = leaveDescription;
-    }
+	public String getEmpName() {
+		return empName;
+	}
 
-    public String getEmpId() {
-        return empId;
-    }
+	public void setEmpName(String empName) {
+		this.empName = empName;
+	}
 
-    public void setEmpId(String empId) {
-        this.empId = empId;
-    }
+	public String getContactNumber() {
+		return contactNumber;
+	}
 
-    public String getEmpName() {
-        return empName;
-    }
+	public void setContactNumber(String contactNumber) {
+		this.contactNumber = contactNumber;
+	}
 
-    public void setEmpName(String empName) {
-        this.empName = empName;
-    }
+	public String getStatus() {
+		return status;
+	}
 
-    public String getContactNumber() {
-        return contactNumber;
-    }
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	 
 
-    public void setContactNumber(String contactNumber) {
-        this.contactNumber = contactNumber;
-    }
+	public LeaveRequest() {
+		
+	}
 
-    public String getStatus() {
-        return status;
-    }
+	public LeaveRequest(long leaveId, String leaveType, String leaveDescription, Long empId, String empName,
+			String contactNumber, String status) {
+		super();
+		this.leaveId = leaveId;
+		this.leaveType = leaveType;
+		this.leaveDescription = leaveDescription;
+		this.empId = empId;
+		this.empName = empName;
+		this.contactNumber = contactNumber;
+		this.status = status;
+	}
 
-    public void setStatus(String status) {
-        this.status = status;
-    }
-
-    @Override
-    public String toString() {
-        return "leaveRequest{" +
-                "leaveId='" + leaveId + '\'' +
-                ", leaveType='" + leaveType + '\'' +
-                ", leaveDescription='" + leaveDescription + '\'' +
-                ", empId='" + empId + '\'' +
-                ", empName='" + empName + '\'' +
-                ", status='" + status + '\'' +
-                '}';
-    }
-
+	@Override
+	public String toString() {
+		return "leaveRequest{" + "leaveId='" + leaveId + '\'' + ", leaveType='" + leaveType + '\''
+				+ ", leaveDescription='" + leaveDescription + '\'' + ", empId='" + empId + '\'' + ", empName='"
+				+ empName + '\'' + ", status='" + status + '\'' + '}';
+	}
 
 }
-
-
-
-
