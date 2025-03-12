@@ -18,7 +18,7 @@
 		</div>
 		<div class="right-side">
 			<h1>Sign in to EvoStaff</h1>
-			<p class="tagline">Education Reimagined.</p>
+			<p class="tagline">Your Staffing Solution</p>
 
 			<form id="loginForm">
 				<div class="form-group">
@@ -40,17 +40,7 @@
 				<button type="submit" class="sign-in-button">Sign in</button>
 			</form>
 
-			<div class="or-login-with">
-				<hr>
-				<span>Or login with</span>
-				<hr>
-			</div>
 
-			<div class="social-login">
-				<button class="google-button">
-					<i class="fab fa-google"></i> Google
-				</button>
-			</div>
 		</div>
 	</div>
 
