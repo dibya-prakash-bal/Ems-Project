@@ -134,6 +134,16 @@
             type: "POST",
             url: "/email-verify",
             data: { email: email },
+            beforeSend: function() {  // 👉 "Start" - Show loading animation
+                Swal.fire({
+                    title: "Sending OTP...",
+                    text: "Please wait while we send your OTP.",
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();  // Show loading indicator
+                    }
+                });
+            },
             success: function(response) {
                 Swal.fire({
                     icon: "success",
@@ -150,10 +160,14 @@
                     title: "Error",
                     text: xhr.responseJSON ? xhr.responseJSON.message : "Something went wrong!",
                 });
+            },
+            complete: function() { // 👉 "Complete" - Hide loading state
+                Swal.hideLoading(); // Hide loading animation (if necessary)
             }
         });
     }
 </script>
+
 
 
 
