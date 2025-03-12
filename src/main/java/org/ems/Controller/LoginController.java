@@ -14,9 +14,8 @@ import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class LoginController {
-	
+
 	private final EmployeeService employeeService;
-	
 
 	public LoginController(EmployeeService employeeService) {
 //		super();
@@ -30,22 +29,27 @@ public class LoginController {
 
 	@PostMapping("/login")
 	@ResponseBody // Add this annotation
-	public String processLogin(@RequestParam("email") String email,@RequestParam("password") String password, HttpSession session) {
+	public String processLogin(@RequestParam("email") String email, @RequestParam("password") String password,
+			HttpSession session) {
 		// ... (your authentication logic) ...
 		System.out.println(email + " " + password);
-		
+
 		Employee authenticatedEmployee = employeeService.authenticateEmployee(email, password);
 
 		if (authenticatedEmployee != null) {
 			// ...
 			String role = authenticatedEmployee.getRole().getRoleName();
-					
 
 			if ("Admin".equalsIgnoreCase(role)) {
+				session.setAttribute("loggedInEmployee", authenticatedEmployee);
 				return "redirect:/admin"; // Return redirect string
-			} else if ("HR".equalsIgnoreCase(role)) {
-				return "redirect:/HR";
+			} else if ("Hr".equalsIgnoreCase(role)) {
+				session.setAttribute("loggedInEmployee", authenticatedEmployee);
+
+				return "redirect:/hr";
 			} else {
+				session.setAttribute("loggedInEmployee", authenticatedEmployee);
+
 				return "redirect:/employee";
 			}
 		} else {
@@ -66,5 +70,11 @@ public class LoginController {
 	@GetMapping("reset-pass")
 	public String resetPass() {
 		return "resetPass";
+	}
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+	    // Invalidate session
+	    session.invalidate();
+	    return "redirect:/";
 	}
 }
