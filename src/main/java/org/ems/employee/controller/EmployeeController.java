@@ -1,6 +1,7 @@
 package org.ems.employee.controller;
 
-import lombok.extern.slf4j.Slf4j;
+import java.util.List;
+
 import org.ems.employee.model.Employee;
 import org.ems.employee.model.LeaveRequest;
 import org.ems.employee.service.EmployeeService;
@@ -9,7 +10,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import java.util.List;
+
+import jakarta.servlet.http.HttpSession;
+import lombok.extern.slf4j.Slf4j;
 
 @Controller
 @Slf4j
@@ -36,12 +39,12 @@ public class EmployeeController {
 
     @PostMapping("/Request-leave")
     public String createLeaveRequest(
-            @RequestParam("empId") String empId,
+            @RequestParam("empId") Long empId,
             @RequestParam("leaveType") String leaveType,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam("contactNumber") String contactNumber)
+            @RequestParam("contactNumber") String contactNumber,HttpSession session)
     {
-
+        Employee loggedUser = (Employee)session.getAttribute("loggedInEmployee");
     	System.out.println(empId + " " + leaveType + " " + description + " "+contactNumber);
 
         // Create LeaveRequest object
