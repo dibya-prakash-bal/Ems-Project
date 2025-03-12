@@ -9,7 +9,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import java.util.List;
 
 @Controller
@@ -43,19 +42,20 @@ public class EmployeeController {
             @RequestParam("contactNumber") String contactNumber)
     {
 
+    	System.out.println(empId + " " + leaveType + " " + description + " "+contactNumber);
+    /*	
         // Create LeaveRequest object
         LeaveRequest leaveRequest = new LeaveRequest();
-        leaveRequest.setEmpId(empId);
+//        leaveRequest.setLeaveId(0)
         leaveRequest.setLeaveType(leaveType);
         leaveRequest.setLeaveDescription(description); // Assuming `description` is mapped to `leaveDescription`
-        leaveRequest.setContactNumber(contactNumber);
-//        leaveRequest.setFromDate(fromDate);
+//      leaveRequest.setFromDate(fromDate);
 //        leaveRequest.setToDate(toDate);
         leaveRequest.setStatus("Pending"); // Default status
 
         // Save Leave Request
         employeeService.AddLeaveRequest(leaveRequest);
-
+*/
         return "redirect:/Leave-form";
     }
 
@@ -67,7 +67,7 @@ public class EmployeeController {
 
 
     @GetMapping("/EmpLeave-list")
-    public String empLeaveList(Model model, @RequestParam("empId") String empId){
+    public String empLeaveList(Model model, @RequestParam("empId") Long empId){
         List<LeaveRequest> leaveRequestByEmployeeId = employeeService.getLeaveRequestByEmployeeId(empId);
         model.addAttribute("leaveRequests", leaveRequestByEmployeeId);
         return "empLeaveList";
