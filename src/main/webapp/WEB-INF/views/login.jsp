@@ -87,8 +87,8 @@
 																// Handle successful login
 																if (data === "redirect:/admin") { // Check redirection target
 																	window.location.href = "/admin";
-																} else if (data === "redirect:/HR") {
-																	window.location.href = "/HR";
+																} else if (data === "redirect:/hr") {
+																	window.location.href = "/hr";
 																} else if (data === "redirect:/employee") {
 																	window.location.href = "/employee";
 																} else {
