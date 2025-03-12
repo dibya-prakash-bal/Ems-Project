@@ -15,7 +15,7 @@ public interface EmployeeService {
 
 	List<LeaveRequest> getAllLeaveRequest();
 
-	List<LeaveRequest> getLeaveRequestByEmployeeId(String id);
+	List<LeaveRequest> getLeaveRequestByEmployeeId(Long id);
 
 	LeaveRequest getLeaveRequestById(Long id);
 

@@ -62,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
 	}
 
 	@Override
-	public List<LeaveRequest> getLeaveRequestByEmployeeId(String id) {
+	public List<LeaveRequest> getLeaveRequestByEmployeeId(Long id) {
 		return leaveRepository.findByEmpId(id);
 	}
 
