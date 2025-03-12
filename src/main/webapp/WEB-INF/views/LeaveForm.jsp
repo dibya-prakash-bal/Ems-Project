@@ -48,6 +48,7 @@
 
                 <!-- Add Employee Form -->
                 <div class="form-container">
+                    <form:form action="Request-leave" method="POST" id="leaveRequestForm">
                     <form:form action="Request-leave"  method="POST" id="leaveRequestForm">
 
                         <!-- Hidden Employee ID -->

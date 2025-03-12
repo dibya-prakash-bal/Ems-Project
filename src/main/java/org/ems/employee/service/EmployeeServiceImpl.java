@@ -51,8 +51,15 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	@Override
 	public void UpdateEmployee(Employee emp) {
+		Employee empUpdated = new Employee();
+		empUpdated.setEmployeeName(emp.getEmployeeName());
+		empUpdated.setEmail(emp.getEmail());
+		empUpdated.setAddress(emp.getAddress());
+		empUpdated.setDob(emp.getDob());
+		empUpdated.setPhoneNo(emp.getPhoneNo());
+		empUpdated.setSalary(emp.getSalary());
 		// TODO Auto-generated method stub
-		employeeRepository.save(emp);
+		employeeRepository.save(empUpdated);
 
 	}
 
