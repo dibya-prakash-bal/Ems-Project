@@ -158,9 +158,10 @@
 							<li class="nav-item dropdown no-arrow"><div
 									class="nav-item dropdown no-arrow">
 									<a class="dropdown-toggle nav-link" aria-expanded="false"
-										data-bs-toggle="dropdown" href="#"><span
-										class="d-none d-lg-inline me-2 text-gray-600 small">Valerie
-											Luna</span><img class="border rounded-circle img-profile"
+										data-bs-toggle="dropdown" href="#">
+										<span class="d-none d-lg-inline me-2 text-gray-600 small"></span>
+										${sessionScope.employee.employeeName}
+										<img class="border rounded-circle img-profile"
 										src="assets/img/avatars/avatar1.jpeg"></a>
 									<div
 										class="dropdown-menu shadow dropdown-menu-end animated--grow-in">
@@ -172,7 +173,7 @@
 											class="fas fa-list fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Activity
 											log</a>
 										<div class="dropdown-divider"></div>
-										<a class="dropdown-item" href="#"><i
+										<a class="dropdown-item" href="logout"><i
 											class="fas fa-sign-out-alt fa-sm fa-fw me-2 text-gray-400"></i>&nbsp;Logout</a>
 									</div>
 								</div></li>
