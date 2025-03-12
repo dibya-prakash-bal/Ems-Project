@@ -19,7 +19,7 @@ public class HrController {
 		this.employeeService = employeeService;
 	}
 
-	@GetMapping("/HR")
+	@GetMapping("/hr")
 	public String hrIndex() {
 		return "hrindex";
 	}
