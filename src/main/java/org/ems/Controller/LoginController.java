@@ -35,6 +35,7 @@ public class LoginController {
 		System.out.println(email + " " + password);
 
 		Employee authenticatedEmployee = employeeService.authenticateEmployee(email, password);
+		System.out.println(authenticatedEmployee.getEmployeeName());
 
 		if (authenticatedEmployee != null) {
 			// ...
@@ -50,11 +51,17 @@ public class LoginController {
 			} else {
 				session.setAttribute("loggedInEmployee", authenticatedEmployee);
 
-				return "redirect:/employee";
+				return "redirect:/employee"; // Return redirect string
 			}
 		} else {
 			return "login?error"; // Return a string indicating login failure
 		}
+	}
+
+	@GetMapping("/logout")
+	public String logout(HttpSession session) {
+		session.invalidate();
+		return "redirect:/";
 	}
 
 	@GetMapping("/ForgetPass")
@@ -71,10 +78,5 @@ public class LoginController {
 	public String resetPass() {
 		return "resetPass";
 	}
-	@GetMapping("/logout")
-	public String logout(HttpSession session) {
-	    // Invalidate session
-	    session.invalidate();
-	    return "redirect:/";
-	}
+
 }
