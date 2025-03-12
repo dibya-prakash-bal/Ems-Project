@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface LeaveRepository extends JpaRepository<LeaveRequest,Long> {
 
-    public List<LeaveRequest> findByEmpId(String empId);
+    public List<LeaveRequest> findByEmpId(Long empId);
 }
