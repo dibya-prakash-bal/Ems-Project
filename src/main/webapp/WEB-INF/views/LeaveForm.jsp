@@ -48,10 +48,10 @@
 
                 <!-- Add Employee Form -->
                 <div class="form-container">
-                    <form:form action="Request-leave" modelAttribute="leaveForm" method="POST" id="leaveRequestForm">
+                    <form:form action="Request-leave" method="POST" id="leaveRequestForm">
 
                         <!-- Hidden Employee ID -->
-                        <input type="hidden" id="empId" name="empId" value="${employeeId}">
+                        <input type="hidden" id="empId" name="empId" value="${sessionScope.loggedInEmployee.employeeId}">
 
                         <div class="mb-3">
                             <label for="leaveType" class="form-label">Leave Type *</label>
