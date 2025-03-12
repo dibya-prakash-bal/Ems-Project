@@ -53,7 +53,6 @@ public class EmployeeController {
     
         // Create LeaveRequest object
         LeaveRequest leaveRequest = new LeaveRequest();
-//        leaveRequest.setLeaveId(0)
         leaveRequest.setEmpId(empId);
         leaveRequest.setEmpName(loggedUser.getEmployeeName());
         leaveRequest.setLeaveType(leaveType);
@@ -63,7 +62,6 @@ public class EmployeeController {
         leaveRequest.setContactNumber(contactNumber);
         leaveRequest.setStatus("Pending"); // Default status
 
-        // Save Leave Request
         employeeService.AddLeaveRequest(leaveRequest);
 
         return "redirect:/Leave-form";
