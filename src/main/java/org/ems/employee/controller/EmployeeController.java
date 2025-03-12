@@ -9,6 +9,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import jakarta.servlet.http.HttpSession;
+
 import java.util.List;
 
 @Controller
@@ -36,26 +39,33 @@ public class EmployeeController {
 
     @PostMapping("/Request-leave")
     public String createLeaveRequest(
-            @RequestParam("empId") String empId,
+            @RequestParam("empId") Long empId,
             @RequestParam("leaveType") String leaveType,
             @RequestParam(value = "description", required = false) String description,
-            @RequestParam("contactNumber") String contactNumber)
+            @RequestParam("contactNumber") String contactNumber,HttpSession session)
     {
-
+          /*
+           * Get the LoggedIn Employee from Session
+           */
+    	Employee loggedUser = (Employee)session.getAttribute("loggedInEmployee");
+    	System.out.println(loggedUser.getEmployeeName());
     	System.out.println(empId + " " + leaveType + " " + description + " "+contactNumber);
-    /*	
+    
         // Create LeaveRequest object
         LeaveRequest leaveRequest = new LeaveRequest();
 //        leaveRequest.setLeaveId(0)
+        leaveRequest.setEmpId(empId);
+        leaveRequest.setEmpName(loggedUser.getEmployeeName());
         leaveRequest.setLeaveType(leaveType);
         leaveRequest.setLeaveDescription(description); // Assuming `description` is mapped to `leaveDescription`
 //      leaveRequest.setFromDate(fromDate);
 //        leaveRequest.setToDate(toDate);
+        leaveRequest.setContactNumber(contactNumber);
         leaveRequest.setStatus("Pending"); // Default status
 
         // Save Leave Request
         employeeService.AddLeaveRequest(leaveRequest);
-*/
+
         return "redirect:/Leave-form";
     }
 
