@@ -3,10 +3,15 @@ package org.ems.employee.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.ems.EmailConfig.EmailDetails;
+import org.ems.EmailConfig.EmailService;
+import org.ems.EmailConfig.OtpService;
 import org.ems.employee.model.Employee;
 import org.ems.employee.model.LeaveRequest;
 import org.ems.employee.repository.EmployeeRepository;
 import org.ems.employee.repository.LeaveRepository;
+import org.ems.utils.OtpGenerator;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -15,11 +20,17 @@ public class EmployeeServiceImpl implements EmployeeService {
 
 	private final LeaveRepository leaveRepository;
 
-	public EmployeeServiceImpl(EmployeeRepository employeeRepository, LeaveRepository leaveRepository) {
+	@Autowired
+	private EmailService emailService;
+
+	private final OtpService otpService;
+
+	public EmployeeServiceImpl(EmployeeRepository employeeRepository, LeaveRepository leaveRepository, OtpService otpService) {
 
 		this.employeeRepository = employeeRepository;
 		this.leaveRepository = leaveRepository;
-	}
+        this.otpService = otpService;
+    }
 
 	@Override
 	public void addEmployee(Employee employee) {
@@ -96,6 +107,41 @@ public class EmployeeServiceImpl implements EmployeeService {
 		// TODO Auto-generated method stub
 		return employeeRepository.findByEmailAndPassword(email, password); // Use email
 
+	}
+
+	@Override
+	public Employee getEmployeeByEmail(String email) {
+		Employee byEmail = employeeRepository.findByEmail(email);
+		return byEmail;
+	}
+
+	@Override
+	public String sendEmailOtp(String email) {
+		String generateOtp = OtpGenerator.generateOtp();
+		EmailDetails emailDetails=new EmailDetails();
+		emailDetails.setRecipient(email);
+		emailDetails.setSubject("Reset Password Verification");
+		emailDetails.setOtp(generateOtp);
+
+		emailService.sendOtpMail(emailDetails);
+		otpService.storeOtp(email,generateOtp);
+
+		return OtpGenerator.generateOtp();
+
+	}
+
+	@Override
+	public boolean verifyOtp(String email, String otp) {
+		boolean verifyStatus = otpService.verifyOtp(email, otp);
+		return verifyStatus;
+	}
+
+	@Override
+	public Employee updateEmployeePassword(String email, String newPassword) {
+		Employee byEmail = employeeRepository.findByEmail(email);
+		byEmail.setPassword(newPassword);
+		Employee saved = employeeRepository.save(byEmail);
+		return saved;
 	}
 
 //	@Override

@@ -1,9 +1,13 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         * {
             margin: 0;
@@ -101,16 +105,16 @@
     <div class="right">
         <h2>Forgot Password</h2>
         <p>Enter the email address tied to your account, we would help you reset your password</p>
-            <input type="email" id="email" placeholder="Enter your email" disabled>
+            <input type="email" id="email" placeholder="Enter your email"  name="email" value="${email}" disabled>
         <p>Enter the OTP</p>
         <div class="otp-container">
-            <input type="text" maxlength="1">
-            <input type="text" maxlength="1">
-            <input type="text" maxlength="1">
-            <input type="text" maxlength="1">
+            <input type="text" maxlength="1" class="otp-input">
+            <input type="text" maxlength="1" class="otp-input">
+            <input type="text" maxlength="1" class="otp-input">
+            <input type="text" maxlength="1" class="otp-input">
         </div>
-        <button  id="reset-btn" onclick="window.location.href='reset-pass'">Reset Password</button>
-        <!-- <button onclick="window.location.href='otp.html'">Send Link</button> -->
+        <!-- Button to Verify OTP -->
+        <button id="verify-btn" onclick="verifyOtp()" >Verify OTP</button>
 
 
 
@@ -118,22 +122,52 @@
         <a href="/">You remember your password? Login</a>
     </div>
 </div>
-
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-        document.getElementById("email").value = ""; // Ensures email field is always blank when page loads
+    // Auto-focus next input field after entering a digit
+    $(".otp-input").on("keyup", function() {
+        if ($(this).val().length === 1) {
+            $(this).next(".otp-input").focus();
+        }
+    });
 
-        // Add event listener to the button
-        document.getElementById("reset-btn").addEventListener("click", function() {
-            const email = document.getElementById("email").value;
+    function verifyOtp() {
+        var email = $("#email").val();
+        var otp = $(".otp-input").map(function() { return $(this).val(); }).get().join(""); // Combine OTP inputs
 
-            if (email.trim() === "") {
-                alert("Please enter your email");
-            } else {
-                alert("OTP has been sent to " + email);
+        if (otp.length !== 4) {
+            Swal.fire({
+                icon: "warning",
+                title: "Invalid OTP",
+                text: "Please enter a valid 4-digit OTP.",
+            });
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/otp-verifying", // Backend endpoint
+            data: { email: email, otp: otp },
+            success: function(response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "OTP Verified!",
+                    text: "Redirecting to reset password...",
+                    timer: 2000,
+                    showConfirmButton: false
+                }).then(() => {
+                    window.location.href = "/reset-pass?email=" + encodeURIComponent(email); // Redirect to Reset Password page
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: "error",
+                    title: "OTP Verification Failed",
+                    text: xhr.responseJSON ? xhr.responseJSON.message : "Invalid OTP. Please try again.",
+                });
             }
         });
-    });
+    }
 </script>
+
 </body>
 </html>
