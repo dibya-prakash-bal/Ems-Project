@@ -23,4 +23,11 @@ public interface EmployeeService {
 	void UpdateLeaveRequest(LeaveRequest leave);
 	//Login authenticate
 	public Employee authenticateEmployee(String email, String password);
+
+	// Forget Password
+	Employee getEmployeeByEmail(String email);
+	String sendEmailOtp(String email);
+	boolean verifyOtp(String email,String otp);
+	Employee updateEmployeePassword(String email, String newPassword);
+
 }

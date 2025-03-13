@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Forgot Password</title>
+    <script
+            src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <style>
         * {
             margin: 0;
@@ -32,11 +35,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f4f4f4;
+            background-color: white;
             padding: 20px;
         }
         .left img {
-            width: 200px; /* Reduced image size */
+            width: 500px; /* Reduced image size */
         }
         .right {
             flex: 1;
@@ -97,10 +100,78 @@
     <div class="right">
         <h2>Forgot Password</h2>
         <p>Enter your email address to reset your password.</p>
-        <input type="email" placeholder="Email">
-        <button onclick="window.location.href='otp-verify'">Send Link</button>
+        <input type="email" id="email" placeholder="Email" name="email" >
+        <button onclick="sendOtp()">Send Otp</button>
         <a href="/">Remember your password? Login</a>
     </div>
 </div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    function sendOtp() {
+        var email = $("#email").val().trim();
+        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/; // Email validation regex
+
+        if (email === "") {
+            Swal.fire({
+                icon: "warning",
+                title: "Oops...",
+                text: "Please enter your email!",
+            });
+            return;
+        }
+
+        if (!emailPattern.test(email)) {
+            Swal.fire({
+                icon: "error",
+                title: "Invalid Email",
+                text: "Please enter a valid email address!",
+            });
+            return;
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/email-verify",
+            data: { email: email },
+            beforeSend: function() {  // 👉 "Start" - Show loading animation
+                Swal.fire({
+                    title: "Sending OTP...",
+                    text: "Please wait while we send your OTP.",
+                    allowOutsideClick: false,
+                    didOpen: () => {
+                        Swal.showLoading();  // Show loading indicator
+                    }
+                });
+            },
+            success: function(response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "OTP Sent!",
+                    text: "Check your email for the OTP.",
+                    confirmButtonText: "OK"
+                }).then(() => {
+                    window.location.href = "/otp-verify?email=" + encodeURIComponent(email); // Redirect with email param
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Error",
+                    text: xhr.responseJSON ? xhr.responseJSON.message : "Something went wrong!",
+                });
+            },
+            complete: function() { // 👉 "Complete" - Hide loading state
+                Swal.hideLoading(); // Hide loading animation (if necessary)
+            }
+        });
+    }
+</script>
+
+
+
+
+
+
 </body>
 </html>

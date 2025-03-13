@@ -87,15 +87,26 @@
     </div>
     <div class="right">
         <h2>Reset Password</h2>
-        <p>Enter the email address tied to your account, we would help you reset your password</p>
-            <input type="email" id="email" placeholder="Enter your email" disabled>
-        <p>Reset password</p>
+        <p>Enter your new password below</p>
+
+        <!-- Disabled email field -->
+        <input type="email" id="email" placeholder="Enter your email" value="${email}" disabled>
+
+        <p>New Password</p>
         <input type="password" id="password" placeholder="Enter the password">
+
+        <p>Confirm Password</p>
         <input type="password" id="confirm-password" placeholder="Re-enter the password">
+
         <button onclick="resetPassword()">Confirm</button>
-        <a href="/">You remember your password? Login</a>
+
+<%--        <a href="/">Remember your password? Login</a>--%>
     </div>
 </div>
+
+<!-- Include SweetAlert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script>
     function resetPassword() {
@@ -103,20 +114,56 @@
         const password = document.getElementById('password').value;
         const confirmPassword = document.getElementById('confirm-password').value;
 
-        if (!email) {
-            alert('Please enter your email');
+        if (!password) {
+            Swal.fire({
+                icon: "warning",
+                title: "Oops...",
+                text: "Please enter a new password!",
+            });
             return;
         }
-        if (!password) {
-            alert('Please enter a password');
+        if (password.length < 6) {
+            Swal.fire({
+                icon: "warning",
+                title: "Weak Password",
+                text: "Password should be at least 6 characters long.",
+            });
             return;
         }
         if (password !== confirmPassword) {
-            alert('Passwords do not match');
+            Swal.fire({
+                icon: "error",
+                title: "Password Mismatch",
+                text: "Passwords do not match!",
+            });
             return;
         }
-        alert('Password reset successful!');
+
+        // Send AJAX request to reset password
+        $.ajax({
+            type: "POST",
+            url: "/reset-pass",
+            data: { email: email, password: password },
+            success: function(response) {
+                Swal.fire({
+                    icon: "success",
+                    title: "Password Reset!",
+                    text: "Your password has been updated successfully. Please log in with your new password.",
+                    confirmButtonText: "Go to Login"
+                }).then(() => {
+                    window.location.href = "/"; // Redirect to login page
+                });
+            },
+            error: function(xhr) {
+                Swal.fire({
+                    icon: "error",
+                    title: "Reset Failed",
+                    text: xhr.responseJSON ? xhr.responseJSON.message : "Something went wrong!",
+                });
+            }
+        });
     }
 </script>
+
 </body>
 </html>
