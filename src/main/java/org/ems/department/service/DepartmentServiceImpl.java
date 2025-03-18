@@ -68,5 +68,13 @@ public class DepartmentServiceImpl implements DepartmentService {
 		
 		
 	}
+
+
+	@Override
+	public long getTotalDeptCount() {
+		// TODO Auto-generated method stub
+		return departmentRepository.countDepartments();
+	}
+	
     
 }

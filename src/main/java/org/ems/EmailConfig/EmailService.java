@@ -110,35 +110,63 @@ public class EmailService {
             mimeMessageHelper.setSubject("Leave Request Submitted - #" + leaveRequest.getLeaveId());
 
             // Email body with Leave Request details
-            String emailContent = """
-                <div style="font-family: Arial, sans-serif; color: #333333; padding: 20px; background-color: #f4f4f4; border-radius: 10px;">
-                    <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center;">
-                        <h2 style="color: #0056b3;">Leave Request Submitted</h2>
-                        <p style="font-size: 18px; margin-bottom: 30px;">Dear %s,</p>
-                        <p>Your leave request has been successfully submitted. Below are the details:</p>
-                        <div style="font-size: 16px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; border: 1px solid #ddd; text-align: left; display: inline-block;">
-                            <p><strong>Leave Request ID:</strong> #%d</p>
-                            <p><strong>Leave Type:</strong> %s</p>
-                            <p><strong>Description:</strong> %s</p>
-                            <p><strong>Contact Number:</strong> %s</p>
-                            <p><strong>Status:</strong> Pending</p>
-                        </div>
-                        <p style="margin-top: 20px; font-size: 14px; color: #555555;">
-                            Our HR team will review your request and update you soon. You will receive an email once your request is processed.
-                        </p>
-                        <p style="font-size: 14px; color: #777777;">For any urgent queries, please contact HR.</p>
-                    </div>
-                    <div style="text-align: center; font-size: 12px; color: #888888; margin-top: 20px;">
-                        © 2025 EvoStaff. All rights reserved.
-                    </div>
-                </div>
-                """.formatted(
+//            String emailContent = """
+//                <div style="font-family: Arial, sans-serif; color: #333333; padding: 20px; background-color: #f4f4f4; border-radius: 10px;">
+//                    <div style="background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center;">
+//                        <h2 style="color: #0056b3;">Leave Request Submitted</h2>
+//                        <p style="font-size: 18px; margin-bottom: 30px;">Dear %s,</p>
+//                        <p>Your leave request has been successfully submitted. Below are the details:</p>
+//                        <div style="font-size: 16px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; border: 1px solid #ddd; text-align: left; display: inline-block;">
+//                            <p><strong>Leave Request ID:</strong> #%d</p>
+//                            <p><strong>Leave Type:</strong> %s</p>
+//                            <p><strong>Description:</strong> %s</p>
+//                            <p><strong>Contact Number:</strong> %s</p>
+//                            <p><strong>Status:</strong> Pending</p>
+//                        </div>
+//                        <p style="margin-top: 20px; font-size: 14px; color: #555555;">
+//                            Our HR team will review your request and update you soon. You will receive an email once your request is processed.
+//                        </p>
+//                        <p style="font-size: 14px; color: #777777;">For any urgent queries, please contact HR.</p>
+//                    </div>
+//                    <div style="text-align: center; font-size: 12px; color: #888888; margin-top: 20px;">
+//                        © 2025 EvoStaff. All rights reserved.
+//                    </div>
+//                </div>
+//                """.formatted(
+//                    leaveRequest.getEmpName(),
+//                    leaveRequest.getLeaveId(),
+//                    leaveRequest.getLeaveType(),
+//                    leaveRequest.getLeaveDescription(),
+//                    leaveRequest.getContactNumber()
+//            );
+            String emailContent = String.format(
+                    "<div style=\"font-family: Arial, sans-serif; color: #333333; padding: 20px; background-color: #f4f4f4; border-radius: 10px;\">" +
+                    "    <div style=\"background-color: #ffffff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0,0,0,0.1); text-align: center;\">" +
+                    "        <h2 style=\"color: #0056b3;\">Leave Request Submitted</h2>" +
+                    "        <p style=\"font-size: 18px; margin-bottom: 30px;\">Dear %s,</p>" +
+                    "        <p>Your leave request has been successfully submitted. Below are the details:</p>" +
+                    "        <div style=\"font-size: 16px; padding: 10px; background-color: #f8f9fa; border-radius: 5px; border: 1px solid #ddd; text-align: left; display: inline-block;\">" +
+                    "            <p><strong>Leave Request ID:</strong> #%d</p>" +
+                    "            <p><strong>Leave Type:</strong> %s</p>" +
+                    "            <p><strong>Description:</strong> %s</p>" +
+                    "            <p><strong>Contact Number:</strong> %s</p>" +
+                    "            <p><strong>Status:</strong> Pending</p>" +
+                    "        </div>" +
+                    "        <p style=\"margin-top: 20px; font-size: 14px; color: #555555;\">" +
+                    "            Our HR team will review your request and update you soon. You will receive an email once your request is processed." +
+                    "        </p>" +
+                    "        <p style=\"font-size: 14px; color: #777777;\">For any urgent queries, please contact HR.</p>" +
+                    "    </div>" +
+                    "    <div style=\"text-align: center; font-size: 12px; color: #888888; margin-top: 20px;\">" +
+                    "        © 2025 EvoStaff. All rights reserved." +
+                    "    </div>" +
+                    "</div>",
                     leaveRequest.getEmpName(),
                     leaveRequest.getLeaveId(),
                     leaveRequest.getLeaveType(),
                     leaveRequest.getLeaveDescription(),
                     leaveRequest.getContactNumber()
-            );
+                );
 
             mimeMessageHelper.setText(emailContent, true); // Enable HTML formatting
             javaMailSender.send(mimeMessage); // Send email

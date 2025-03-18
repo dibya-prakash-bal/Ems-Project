@@ -29,5 +29,7 @@ public interface EmployeeService {
 	String sendEmailOtp(String email);
 	boolean verifyOtp(String email,String otp);
 	Employee updateEmployeePassword(String email, String newPassword);
+	//get total employee count
+	long getTotalEmployee();
 
 }

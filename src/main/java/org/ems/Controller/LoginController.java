@@ -3,6 +3,7 @@ package org.ems.Controller;
 import org.ems.employee.model.Employee;
 import org.ems.employee.repository.EmployeeRepository;
 import org.ems.employee.service.EmployeeService;
+import org.springframework.boot.web.servlet.server.Session;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -46,6 +47,7 @@ public class LoginController {
 			String role = authenticatedEmployee.getRole().getRoleName();
 
 			if ("Admin".equalsIgnoreCase(role)) {
+				
 				session.setAttribute("loggedInEmployee", authenticatedEmployee);
 				return "redirect:/admin"; // Return redirect string
 			} else if ("Hr".equalsIgnoreCase(role)) {
@@ -134,5 +136,6 @@ public class LoginController {
 
 		return ResponseEntity.ok().body(Map.of("status", "success", "message", "Password reset successfully!"));
 	}
+	
 
 }

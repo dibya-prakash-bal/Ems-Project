@@ -13,4 +13,5 @@ public interface RoleService {
 	boolean isRoleNameTaken(String roleName, Long roleId);
 	Role updateRole(Long roleId, String roleName, String roleDescription);
 	void deleteRole(Long roleId);
+	long getRolesCount();
 }

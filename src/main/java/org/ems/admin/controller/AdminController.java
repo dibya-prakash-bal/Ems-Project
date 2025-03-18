@@ -42,7 +42,14 @@ public class AdminController {
 	}
 
 	@GetMapping("/admin")
-	public String index() {
+	public String index(Model model) {
+		long empCount = employeeService.getTotalEmployee();
+		long deptCount = deptService.getTotalDeptCount();
+		long roleCount = roleService.getRolesCount();
+		System.out.println(empCount);
+		model.addAttribute("empcount", empCount);
+		model.addAttribute("deptcount",deptCount);
+		model.addAttribute("rolecount", roleCount);
 		return "index";
 	}
 
@@ -272,5 +279,6 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
+	
 
 }

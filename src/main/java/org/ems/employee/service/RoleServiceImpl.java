@@ -74,36 +74,41 @@ public class RoleServiceImpl implements RoleService {
 	@Override
 	public void deleteRole(Long roleId) {
 		// TODO Auto-generated method stub
-		 try {
-	            // Check if role exists
-	            Role role = roleRepository.findById(roleId)
-	                .orElseThrow(() -> new EntityNotFoundException("Role not found with ID: " + roleId));
+		try {
+			// Check if role exists
+			Role role = roleRepository.findById(roleId)
+					.orElseThrow(() -> new EntityNotFoundException("Role not found with ID: " + roleId));
 
-	            // Find all employees with this role
-	            List<Employee> employeesWithRole = employeeRepository.findByRoleRoleId(roleId);
+			// Find all employees with this role
+			List<Employee> employeesWithRole = employeeRepository.findByRoleRoleId(roleId);
 
-	            if (!employeesWithRole.isEmpty()) {
+			if (!employeesWithRole.isEmpty()) {
 //	                logger.info("Found {} employees with role ID: {}. Unlinking role...", 
 //	                    employeesWithRole.size(), roleId);
 
-	                // Unlink role from employees
-	                for (Employee employee : employeesWithRole) {
-	                    employee.setRole(null);
-	                    employeeRepository.save(employee);
+				// Unlink role from employees
+				for (Employee employee : employeesWithRole) {
+					employee.setRole(null);
+					employeeRepository.save(employee);
 //	                    logger.debug("Unlinked role from employee ID: {}", employee.getEmployeeId());
-	                }
-	            }
+				}
+			}
 
-	            // Delete the role
-	            roleRepository.delete(role);
+			// Delete the role
+			roleRepository.delete(role);
 //	            logger.info("Successfully deleted role with ID: {}", roleId);
 
-	        } catch (Exception e) {
+		} catch (Exception e) {
 //	            logger.error("Error deleting role with ID: {}", roleId, e);
-	            throw new RuntimeException("Failed to delete role: " + e.getMessage());
-	        }
-		
+			throw new RuntimeException("Failed to delete role: " + e.getMessage());
+		}
+
 	}
-	
+
+	@Override
+	public long getRolesCount() {
+		// TODO Auto-generated method stub
+		return roleRepository.countRoles();
+	}
 
 }

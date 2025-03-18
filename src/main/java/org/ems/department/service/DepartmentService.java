@@ -19,5 +19,5 @@ public interface DepartmentService {
     void deleteDepartment(String id);
     void assignDepartmentToEmplyoee(String departmentId,Long employeeId);
 
-
+   long getTotalDeptCount();
 }
