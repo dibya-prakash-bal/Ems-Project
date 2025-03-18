@@ -1,5 +1,7 @@
 package org.ems.admin.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
@@ -12,7 +14,11 @@ import org.ems.employee.model.Employee;
 import org.ems.employee.model.Role;
 import org.ems.employee.service.EmployeeService;
 import org.ems.employee.service.RoleService;
+import org.ems.utils.PdfReportGenerator;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -34,11 +40,14 @@ public class AdminController {
 	private final EmployeeService employeeService;
 	private final RoleService roleService;
 	private final DepartmentService deptService;
+	private final PdfReportGenerator pdfReportGenerator;
 
-	public AdminController(EmployeeService employeeService, RoleService roleService, DepartmentService deptService) {
+	public AdminController(EmployeeService employeeService, RoleService roleService, DepartmentService deptService,
+			PdfReportGenerator pdfReportGenerator) {
 		this.employeeService = employeeService;
 		this.roleService = roleService;
 		this.deptService = deptService;
+		this.pdfReportGenerator = pdfReportGenerator;
 	}
 
 	@GetMapping("/admin")
@@ -48,9 +57,20 @@ public class AdminController {
 		long roleCount = roleService.getRolesCount();
 		System.out.println(empCount);
 		model.addAttribute("empcount", empCount);
-		model.addAttribute("deptcount",deptCount);
+		model.addAttribute("deptcount", deptCount);
 		model.addAttribute("rolecount", roleCount);
 		return "index";
+	}
+
+	@GetMapping("/generate-report")
+	public ResponseEntity<InputStreamResource> generateReport() throws IOException {
+		ByteArrayInputStream reportStream = pdfReportGenerator.generateCompanyReport();
+
+		HttpHeaders headers = new HttpHeaders();
+		headers.add("Content-Disposition", "inline; filename=company_report.pdf");
+
+		return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF)
+				.body(new InputStreamResource(reportStream));
 	}
 
 	@GetMapping("/emplist")
@@ -74,7 +94,8 @@ public class AdminController {
 	@RequestMapping(value = "/addEmployee", method = { RequestMethod.POST })
 	public String submitEmpForm(@RequestParam("employeeName") String name, @RequestParam("email") String email,
 			@RequestParam("address") String address, @RequestParam("phoneNo") String phoneNo,
-			@RequestParam("dob") String dobString, @RequestParam("salary") Double salary , @RequestParam("password") String password) {
+			@RequestParam("dob") String dobString, @RequestParam("salary") Double salary,
+			@RequestParam("password") String password) {
 //		if(result.hasErrors()) {
 //			return "redirect:/emplist";
 //    	@ModelAttribute("empForm") Employee emp,
@@ -279,6 +300,5 @@ public class AdminController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
 		}
 	}
-	
 
 }
