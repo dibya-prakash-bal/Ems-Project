@@ -2,7 +2,7 @@
 
 A full-featured web application designed to manage employee data efficiently.
 
-## ✨ Overview
+##  Overview
 
 The EMS (Employee Management System) Portal allows administrators to:
 
@@ -13,7 +13,7 @@ The EMS (Employee Management System) Portal allows administrators to:
 
 Built with a clean and user-friendly interface, the application streamlines HR operations such as tracking employee names, designations, departments, and contact information.
 
-## 💡 Features
+## Features
 
 - CRUD operations on employee data
 - Responsive and modern UI
@@ -26,7 +26,7 @@ Built with a clean and user-friendly interface, the application streamlines HR o
 - Backend: Java / Spring Boot
 - Database: PostgreSQL
 
-## 📁 Project Structure
+##  Project Structure
 
 ```plaintext
 ems-portal/
