@@ -37,13 +37,15 @@ ems-portal/
 └── ...
 
 
+
 -- This is the Rolebased Signin pages.
 
-![Screenshot 2025-05-24 114107](https://github.com/user-attachments/assets/5434cede-b907-4c2c-8bee-7fad877d3fb8)
+![Rolebased Signin](https://github.com/user-attachments/assets/5434cede-b907-4c2c-8bee-7fad877d3fb8?raw=true)
 
---This is the Employee pages 
+-- This is the Employee pages 
 
-![Screenshot 2025-05-24 115013](https://github.com/user-attachments/assets/1f5f4e91-3050-4b01-b3f4-1acf6cba87b5)
+![Employee Pages](https://github.com/user-attachments/assets/1f5f4e91-3050-4b01-b3f4-1acf6cba87b5?raw=true)
 
 -- Leave Request pages
-![Screenshot 2025-05-24 115125](https://github.com/user-attachments/assets/71f9b108-ff2e-489c-833c-37c739b1b28b)
+
+![Leave Request](https://github.com/user-attachments/assets/71f9b108-ff2e-489c-833c-37c739b1b28b?raw=true)
